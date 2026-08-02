@@ -14,6 +14,16 @@ STATIC = Path(__file__).resolve().parent.parent / "site" / "static"
 GOOD = 80
 MID = 70
 
+MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def ytd_label(month_keys, latest_month):
+    latest_year = int(month_keys[-1][:4])
+    keys = [k for k in month_keys if k.startswith(str(latest_year))]
+    if len(keys) == 1:
+        return latest_month
+    return f"{MONTH_NAMES[int(keys[0][5:7]) - 1]}–{latest_month}"
+
 
 def cls(pct):
     if pct is None:
@@ -127,13 +137,16 @@ def build():
     )
 
     popular = sorted(routes.values(), key=lambda r: -r["flights"])[:40]
-    ctx = {"month": month, "month_count": month_count}
+    ytd = ytd_label(data["month_keys"], month)
+    ctx = {"month": month, "month_count": month_count, "ytd_label": ytd}
     (OUTPUT_DIR / "index.html").write_text(
         env.get_template("index.html").render(
             airports=airports,
             month=month,
             popular=popular,
             route_count=len(routes),
+            month_count=month_count,
+            ytd_label=ytd,
             og_url=BASE_URL,
             og_image=BASE_URL + "og/home.png",
         )
@@ -157,7 +170,7 @@ def build():
         (OUTPUT_DIR / f"{r['orig'].lower()}-{r['dest'].lower()}.html").write_text(page)
         render_og_image(
             f"{r['orig']} → {r['dest']}",
-            f"{r['carriers'][0]['name']} leads at {r['carriers'][0]['on_time_pct']}% on-time. {r['on_time_pct']}% of flights arrived on time in {month}.",
+            f"{r['carriers'][0]['name']} leads at {r['carriers'][0]['on_time_pct']}% on-time year to date. {r['on_time_pct']}% of flights arrived on time ({r['ytd_label']}).",
             og_dir / f"{r['orig'].lower()}-{r['dest'].lower()}.png",
         )
         route_index.append(

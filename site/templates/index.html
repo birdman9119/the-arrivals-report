@@ -25,16 +25,16 @@
       <label class="field field-date">
         <span>Travel date <span class="opt">(optional)</span></span>
         <input type="date" id="date">
-        <span class="hint">See how that month historically performs</span>
       </label>
       <button type="submit" class="cta">See airline stats</button>
     </div>
+    <p class="wizard-note">Travel date is optional — we'll show how that month historically performs on your route.</p>
     <p class="wizard-msg" id="wizard-msg" hidden></p>
   </form>
   <p class="lede stats-line">{{ route_count }} routes · {{ airports|length }} airports · {{ month_count }} months of DOT data</p>
 </section>
 <section>
-  <h2 class="section-title">Most-flown routes <span class="muted">— latest data: {{ month }}</span></h2>
+  <h2 class="section-title">Most-flown routes <span class="muted">— year to date ({{ ytd_label }})</span></h2>
   <table class="route-table">
     <thead>
       <tr><th>Route</th><th class="num">Best airline</th><th class="num">On-time</th><th class="num">Flights</th></tr>

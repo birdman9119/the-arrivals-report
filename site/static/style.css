@@ -59,8 +59,7 @@ main.wrap { padding-top: 48px; padding-bottom: 80px; }
 }
 .field input:focus { border-color: var(--fg); }
 .field-date { max-width: 170px; }
-.field .opt { font-size: 10px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--muted); }
-.field .hint { font-size: 11px; color: var(--muted); font-weight: 400; }
+.field .opt { font-size: 10px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--muted); white-space: nowrap; }
 .swap {
   border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 9px 10px;
   font-size: 15px; cursor: pointer; color: var(--muted); line-height: 1;
@@ -72,6 +71,8 @@ main.wrap { padding-top: 48px; padding-bottom: 80px; }
 }
 .cta:hover { opacity: 0.88; }
 .wizard-msg { margin-top: 12px; font-size: 14px; color: var(--bad); }
+.wizard-note { margin-top: 12px; font-size: 13px; color: var(--muted); }
+.table-note { margin-bottom: 10px; font-size: 13px; color: var(--muted); }
 .suggest {
   position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; z-index: 20;
   background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;

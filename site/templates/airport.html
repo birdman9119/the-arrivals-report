@@ -7,7 +7,7 @@
 <section class="airport-head">
   <p class="kicker">{{ code }}</p>
   <h1>{{ a.city }}<br><span class="muted">{{ a.name }}</span></h1>
-  <p class="lede">Most reliable airline for each major route. {{ month_count }} months of data, latest: {{ month }}. Source: U.S. DOT.</p>
+  <p class="lede">Most reliable airline for each major route, year to date ({{ ytd_label }}). Latest month: {{ month }}. Source: U.S. DOT.</p>
 </section>
 {% if outbound %}
 <section>

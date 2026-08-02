@@ -31,6 +31,8 @@ USECOLS = [
     "Diverted",
 ]
 
+MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
 AIRLINE_NAMES = {
     "AA": "American",
     "AS": "Alaska",
@@ -130,60 +132,89 @@ def latest_raw():
     return zips[0], year, month
 
 
-def aggregate_route(route, months):
+def aggregate_route(route, months, latest_label=None):
     by_carrier = {}
     tot_flights = 0
     ontime_w = 0
     delay_w = 0
     cancelled = 0
-    for m in months:
+    for key, m in months:
         tot_flights += m["flights"]
         ontime_w += m["flights"] * m["on_time_pct"]
         delay_w += m["flights"] * m["avg_delay_min"]
         cancelled += m.get("cancelled", 0)
-    carrier_codes = sorted({c["code"] for m in months for c in m["carriers"]})
+
+    latest_key = months[-1][0]
+    latest_year = int(latest_key[:4])
+    ytd_months = [(k, m) for k, m in months if int(k[:4]) == latest_year]
+    yf_tot = sum(m["flights"] for _, m in ytd_months)
+    yc_tot = sum(m.get("cancelled", 0) for _, m in ytd_months)
+    ytd_pct = round(sum(m["flights"] * m["on_time_pct"] for _, m in ytd_months) / yf_tot, 1) if yf_tot else 0.0
+    ytd_delay = round(sum(m["flights"] * m["avg_delay_min"] for _, m in ytd_months) / yf_tot, 1) if yf_tot else 0.0
+    ytd_cancel_rate = round(yc_tot * 100 / (yf_tot + yc_tot), 1) if (yf_tot + yc_tot) else 0.0
+    if len(ytd_months) == 1:
+        ytd_label = latest_label or latest_key
+    else:
+        ytd_label = f"{MONTH_NAMES[int(ytd_months[0][0][5:7]) - 1]}–{latest_label or latest_key}"
+
+    carrier_codes = sorted({c["code"] for _, m in months for c in m["carriers"]})
     for code in carrier_codes:
-        first = next(c for m in months for c in m["carriers"] if c["code"] == code)
+        first = next(c for _, m in months for c in m["carriers"] if c["code"] == code)
         row = {
             "code": code,
             "name": BRAND_NAMES.get(code, first["name"]),
             "flights": 0,
+            "window_flights": 0,
             "on_time_pct": 0.0,
             "avg_delay_min": 0.0,
             "trend": [],
         }
         w = []
         d = []
-        for m in months:
+        yf = 0
+        yw = 0
+        yd = 0
+        for key, m in months:
             cm = next((x for x in m["carriers"] if x["code"] == code), None)
             if cm:
-                row["flights"] += cm["flights"]
+                row["window_flights"] += cm["flights"]
                 row["trend"].append(cm["on_time_pct"])
                 w.append(cm["flights"])
                 d.append(cm["flights"] * cm["avg_delay_min"])
+                if int(key[:4]) == latest_year:
+                    yf += cm["flights"]
+                    yw += cm["flights"] * cm["on_time_pct"]
+                    yd += cm["flights"] * cm["avg_delay_min"]
             else:
                 row["trend"].append(None)
                 w.append(0)
                 d.append(0)
-        if row["flights"] >= MIN_CARRIER_MONTHLY * len(months):
-            pairs = [(p, f) for p, f in zip(row["trend"], w) if p is not None]
-            row["on_time_pct"] = round(sum(p * f for p, f in pairs) / sum(f for _, f in pairs), 1)
-            row["avg_delay_min"] = round(sum(d) / row["flights"], 1)
+        if row["window_flights"] >= MIN_CARRIER_MONTHLY * len(months):
+            row["flights"] = yf
+            row["on_time_pct"] = round(yw / yf, 1) if yf else None
+            row["avg_delay_min"] = round(yd / yf, 1) if yf else None
             by_carrier[code] = row
     tod_w = {"morning": 0, "evening": 0}
-    for m in months:
+    for _, m in ytd_months:
         for k in tod_w:
             if k in m["tod"]:
                 tod_w[k] += m["flights"] * m["tod"][k]
-    total = tot_flights + cancelled
+    total = yf_tot + yc_tot
     return {
-        "flights": tot_flights,
-        "on_time_pct": round(ontime_w / tot_flights, 1) if tot_flights else 0.0,
-        "avg_delay_min": round(delay_w / tot_flights, 1) if tot_flights else 0.0,
-        "cancelled": cancelled,
-        "cancel_rate": round(cancelled * 100 / total, 1) if total else 0.0,
-        "tod": {k: round(v / tot_flights, 1) for k, v in tod_w.items()},
-        "carriers": sorted(by_carrier.values(), key=lambda c: -c["on_time_pct"]),
+        "flights": yf_tot,
+        "on_time_pct": ytd_pct,
+        "avg_delay_min": ytd_delay,
+        "cancelled": yc_tot,
+        "cancel_rate": ytd_cancel_rate,
+        "ytd_label": ytd_label,
+        "ytd_months": len(ytd_months),
+        "window_pct": round(ontime_w / tot_flights, 1) if tot_flights else 0.0,
+        "window_flights": tot_flights,
+        "tod": {k: round(v / yf_tot, 1) for k, v in tod_w.items()},
+        "carriers": sorted(
+            by_carrier.values(),
+            key=lambda c: -(c["on_time_pct"] if c["on_time_pct"] is not None else -1),
+        ),
     }
 
 
@@ -212,11 +243,11 @@ def main():
     latest = months[-1]
     routes = {}
     for route in latest["routes"]:
-        present = [m["routes"][route] for m in months if route in m["routes"]]
+        present = [(m["month"], m["routes"][route]) for m in months if route in m["routes"]]
         if not present:
             continue
         codes = route.split("_")
-        agg = aggregate_route(route, present)
+        agg = aggregate_route(route, present, latest["label"])
         if not agg["carriers"]:
             continue
         routes[route] = agg

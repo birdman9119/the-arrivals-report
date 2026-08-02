@@ -12,23 +12,25 @@
 
 <section class="decision" id="decision">
   <p class="decision-line">
-    <span id="trip-line">Latest data ({{ month }}):</span>
+    <span id="trip-line">Year to date ({{ r.ytd_label }}):</span>
     <strong>{{ r.on_time_pct }}%</strong> of flights on this route arrived on time —
-    {{ "{:,}".format(r.flights) }} flights analyzed over {{ month_count }} months{% if r.cancel_rate %} ({{ r.cancel_rate }}% cancelled){% endif %}.
-    <span class="benchmark">National average across all routes here: {{ national }}%.</span>
+    {{ "{:,}".format(r.flights) }} flights{% if r.cancel_rate %} ({{ r.cancel_rate }}% cancelled){% endif %}.
+    <span class="benchmark">Rolling window: {{ r.window_pct }}% over {{ month_count }} months · National average across all routes here: {{ national }}%.</span>
   </p>
   <p class="decision-pick" id="decision-pick">
     Best pick: <strong>{% if '(' in r.carriers[0].name %}{{ r.carriers[0].name }}{% else %}{{ r.carriers[0].name }} ({{ r.carriers[0].code }}){% endif %}</strong>
-    at {{ r.carriers[0].on_time_pct }}% on-time.
-    {% if r.carriers|length > 1 and r.carriers[1].on_time_pct >= r.carriers[0].on_time_pct - 2 %}
+    at {{ r.carriers[0].on_time_pct }}% year to date.
+    {% if r.carriers|length > 1 and r.carriers[1].on_time_pct is not none and r.carriers[1].on_time_pct >= r.carriers[0].on_time_pct - 2 %}
     Close race — {{ r.carriers[1].name }} is within 2 points.
     {% endif %}
   </p>
   {% if r.carriers|length >= 3 %}
+  {% if r.carriers[0].on_time_pct is not none and r.carriers[-1].on_time_pct is not none %}
   {% set worst = r.carriers[-1] %}
   {% set gap = r.carriers[0].on_time_pct - worst.on_time_pct %}
   {% if gap >= 5 %}
   <p class="decision-avoid">Rough option: {{ worst.name }} is {{ "%0.1f"|format(gap) }} points behind the leader ({{ worst.on_time_pct }}%).</p>
+  {% endif %}
   {% endif %}
   {% endif %}
   <p class="decision-note" id="decision-note" hidden></p>
@@ -44,6 +46,7 @@
 {% endif %}
 
 <section>
+  <p class="table-note">Year to date ({{ r.ytd_label }}), per airline. Trend shows each month's on-time %.</p>
   <table class="airline-table">
     <thead>
       <tr>
@@ -58,17 +61,17 @@
       {% for al in r.carriers %}
       <tr class="{{ 'best-row' if loop.first }}">
         {% if loop.first %}
-        <td class="best-tag"><span class="tag">Top pick</span> {{ al.name }}{% if '(' not in al.name %} <span class="muted">({{ al.code }})</span>{% endif %}</td>
-        {% else %}<td>{{ al.name }}{% if '(' not in al.name %} <span class="muted">({{ al.code }})</span>{% endif %}</td>{% endif %}
-        <td class="num {{ al.on_time_pct|cls }}">{{ al.on_time_pct }}%</td>
+        <td class="best-tag"><span class="tag">Top pick</span> {{ al.name }}{% if '(' not in al.name %} <span class="muted">({{ al.code }})</span>{% endif %}{% if al.on_time_pct is none %} <span class="muted">— no flights in {{ r.ytd_label }}</span>{% endif %}</td>
+        {% else %}<td>{{ al.name }}{% if '(' not in al.name %} <span class="muted">({{ al.code }})</span>{% endif %}{% if al.on_time_pct is none %} <span class="muted">— no flights in {{ r.ytd_label }}</span>{% endif %}</td>{% endif %}
+        <td class="num {{ al.on_time_pct|cls }}">{% if al.on_time_pct is not none %}{{ al.on_time_pct }}%{% else %}—{% endif %}</td>
         <td class="num">{{ al.trend|sparkline }}</td>
-        <td class="num">{{ al.avg_delay_min }} min</td>
-        <td class="num">{{ "{:,}".format(al.flights) }}</td>
+        <td class="num">{% if al.avg_delay_min is not none %}{{ al.avg_delay_min }} min{% else %}—{% endif %}</td>
+        <td class="num">{% if al.flights %}{{ "{:,}".format(al.flights) }}{% else %}—{% endif %}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  {% set small = r.carriers | selectattr('flights', 'lt', 200) | list %}
+  {% set small = r.carriers | selectattr('window_flights', 'lt', 200) | list %}
   {% if small %}
   <p class="footnote">Small sample: {{ small | map(attribute='name') | join(', ') }} — fewer than 200 flights in this window, treat the numbers as noisy.</p>
   {% endif %}
