@@ -38,6 +38,20 @@ AIRPORT_CITIES = {code: city for code, _, city in AIRPORTS}
 
 CURRENT_MONTH = (2026, 5)
 
+# Regional carriers shown to travelers by the brand they actually book.
+BRAND_NAMES = {
+    "OO": "SkyWest (United Express)",
+    "MQ": "Envoy (American Eagle)",
+    "OH": "PSA (American Eagle)",
+    "9E": "Endeavor (Delta Connection)",
+    "YX": "Republic (American/Delta/United)",
+    "G7": "GoJet (United Express)",
+    "QX": "Horizon (Alaska)",
+    "C5": "CommutAir (United Express)",
+    "PT": "Piedmont (American Eagle)",
+    "YV": "Mesa (United Express)",
+}
+
 BASE_URL = "https://birdman9119.github.io/the-arrivals-report/"
 
 ROOT = Path(__file__).resolve().parent.parent

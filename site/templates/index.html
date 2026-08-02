@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block title %}The Arrivals Report — which airline should you book?{% endblock %}
+{% block ogtitle %}Which airline should you book? — The Arrivals Report{% endblock %}
+{% block ogdesc %}On-time performance by airline for every major U.S. route, from U.S. DOT data.{% endblock %}
 {% block head %}<meta name="description" content="Enter your route and travel date to see on-time performance by airline, from U.S. DOT data.">{% endblock %}
 {% block content %}
 <section class="hero">
@@ -21,16 +23,18 @@
         <div class="suggest" id="to-suggest" hidden></div>
       </label>
       <label class="field field-date">
-        <span>Travel date</span>
+        <span>Travel date <span class="opt">(optional)</span></span>
         <input type="date" id="date">
+        <span class="hint">See how that month historically performs</span>
       </label>
       <button type="submit" class="cta">See airline stats</button>
     </div>
     <p class="wizard-msg" id="wizard-msg" hidden></p>
   </form>
+  <p class="lede stats-line">{{ route_count }} routes · {{ airports|length }} airports · {{ month_count }} months of DOT data</p>
 </section>
 <section>
-  <h2 class="section-title">Most-searched routes <span class="muted">— latest data: {{ month }}</span></h2>
+  <h2 class="section-title">Most-flown routes <span class="muted">— latest data: {{ month }}</span></h2>
   <table class="route-table">
     <thead>
       <tr><th>Route</th><th class="num">Best airline</th><th class="num">On-time</th><th class="num">Flights</th></tr>

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ r.label }} — which airline should you book? ({{ month }}){% endblock %}
+{% block ogtitle %}{{ r.orig }} → {{ r.dest }}: which airline should you book?{% endblock %}
+{% block ogdesc %}{{ r.carriers[0].name }} leads at {{ r.carriers[0].on_time_pct }}% on-time on {{ r.label }}. Source: U.S. DOT.{% endblock %}
 {% block head %}<meta name="description" content="On-time performance by airline on {{ r.label }}. {{ r.carriers[0].name }} leads at {{ r.carriers[0].on_time_pct }}% on-time over {{ month_count }} months. Source: U.S. DOT.">{% endblock %}
 {% block content %}
 <section class="airport-head">
@@ -12,15 +14,23 @@
   <p class="decision-line">
     <span id="trip-line">Latest data ({{ month }}):</span>
     <strong>{{ r.on_time_pct }}%</strong> of flights on this route arrived on time —
-    {{ "{:,}".format(r.flights) }} flights analyzed over {{ month_count }} months.
+    {{ "{:,}".format(r.flights) }} flights analyzed over {{ month_count }} months{% if r.cancel_rate %} ({{ r.cancel_rate }}% cancelled){% endif %}.
+    <span class="benchmark">National average across all routes here: {{ national }}%.</span>
   </p>
   <p class="decision-pick" id="decision-pick">
-    Best pick: <strong>{{ r.carriers[0].name }} ({{ r.carriers[0].code }})</strong>
+    Best pick: <strong>{% if '(' in r.carriers[0].name %}{{ r.carriers[0].name }}{% else %}{{ r.carriers[0].name }} ({{ r.carriers[0].code }}){% endif %}</strong>
     at {{ r.carriers[0].on_time_pct }}% on-time.
     {% if r.carriers|length > 1 and r.carriers[1].on_time_pct >= r.carriers[0].on_time_pct - 2 %}
     Close race — {{ r.carriers[1].name }} is within 2 points.
     {% endif %}
   </p>
+  {% if r.carriers|length >= 3 %}
+  {% set worst = r.carriers[-1] %}
+  {% set gap = r.carriers[0].on_time_pct - worst.on_time_pct %}
+  {% if gap >= 5 %}
+  <p class="decision-avoid">Rough option: {{ worst.name }} is {{ "%0.1f"|format(gap) }} points behind the leader ({{ worst.on_time_pct }}%).</p>
+  {% endif %}
+  {% endif %}
   <p class="decision-note" id="decision-note" hidden></p>
 </section>
 
@@ -47,7 +57,9 @@
     <tbody>
       {% for al in r.carriers %}
       <tr class="{{ 'best-row' if loop.first }}">
-        {% if loop.first %}<td class="best-tag"><span class="tag">Top pick</span> {{ al.name }} <span class="muted">({{ al.code }})</span></td>{% else %}<td>{{ al.name }} <span class="muted">({{ al.code }})</span></td>{% endif %}
+        {% if loop.first %}
+        <td class="best-tag"><span class="tag">Top pick</span> {{ al.name }}{% if '(' not in al.name %} <span class="muted">({{ al.code }})</span>{% endif %}</td>
+        {% else %}<td>{{ al.name }}{% if '(' not in al.name %} <span class="muted">({{ al.code }})</span>{% endif %}</td>{% endif %}
         <td class="num {{ al.on_time_pct|cls }}">{{ al.on_time_pct }}%</td>
         <td class="num">{{ al.trend|sparkline }}</td>
         <td class="num">{{ al.avg_delay_min }} min</td>
@@ -56,6 +68,10 @@
       {% endfor %}
     </tbody>
   </table>
+  {% set small = r.carriers | selectattr('flights', 'lt', 200) | list %}
+  {% if small %}
+  <p class="footnote">Small sample: {{ small | map(attribute='name') | join(', ') }} — fewer than 200 flights in this window, treat the numbers as noisy.</p>
+  {% endif %}
 </section>
 <section class="affiliate">
   <p>Flying {{ r.orig }} → {{ r.dest }}? <a href="#">Luggage tracker</a> · <a href="#">Travel insurance</a></p>
@@ -71,11 +87,13 @@
   var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   var name = months[monthNum - 1];
   var trip = document.getElementById("trip-line");
+  var note = document.getElementById("decision-note");
   if (trip) trip.textContent = "Flying in " + name + " " + d.getFullYear() + " — data is from the most recent month (" + {{ (month|string)|tojson }} + "):";
+  note.hidden = false;
   if (monthly[monthNum] != null) {
-    var note = document.getElementById("decision-note");
-    note.hidden = false;
-    note.textContent = "Historically, " + name + " flights on this route are on time " + monthly[monthNum] + "% of the time.";
+    note.textContent = "On the months we have on file, " + name + " flights on this route were on time " + monthly[monthNum] + "% — a historical average, not a forecast for your specific day.";
+  } else {
+    note.textContent = "We don't have " + name + " in our history yet, so this page shows the most recent month instead.";
   }
 })();
 </script>

@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config import (
     AIRPORT_CITIES,
     AIRPORT_NAMES,
+    BRAND_NAMES,
     HISTORY_DIR,
     MIN_CARRIER_MONTHLY,
     MIN_ROUTE_FLIGHTS,
@@ -134,37 +135,53 @@ def aggregate_route(route, months):
     tot_flights = 0
     ontime_w = 0
     delay_w = 0
+    cancelled = 0
     for m in months:
         tot_flights += m["flights"]
         ontime_w += m["flights"] * m["on_time_pct"]
         delay_w += m["flights"] * m["avg_delay_min"]
+        cancelled += m.get("cancelled", 0)
     carrier_codes = sorted({c["code"] for m in months for c in m["carriers"]})
     for code in carrier_codes:
         first = next(c for m in months for c in m["carriers"] if c["code"] == code)
-        row = {"code": code, "name": first["name"], "flights": 0, "on_time_pct": 0.0, "trend": []}
+        row = {
+            "code": code,
+            "name": BRAND_NAMES.get(code, first["name"]),
+            "flights": 0,
+            "on_time_pct": 0.0,
+            "avg_delay_min": 0.0,
+            "trend": [],
+        }
         w = []
+        d = []
         for m in months:
             cm = next((x for x in m["carriers"] if x["code"] == code), None)
             if cm:
                 row["flights"] += cm["flights"]
                 row["trend"].append(cm["on_time_pct"])
                 w.append(cm["flights"])
+                d.append(cm["flights"] * cm["avg_delay_min"])
             else:
                 row["trend"].append(None)
                 w.append(0)
+                d.append(0)
         if row["flights"] >= MIN_CARRIER_MONTHLY * len(months):
             pairs = [(p, f) for p, f in zip(row["trend"], w) if p is not None]
             row["on_time_pct"] = round(sum(p * f for p, f in pairs) / sum(f for _, f in pairs), 1)
+            row["avg_delay_min"] = round(sum(d) / row["flights"], 1)
             by_carrier[code] = row
     tod_w = {"morning": 0, "evening": 0}
     for m in months:
         for k in tod_w:
             if k in m["tod"]:
                 tod_w[k] += m["flights"] * m["tod"][k]
+    total = tot_flights + cancelled
     return {
         "flights": tot_flights,
         "on_time_pct": round(ontime_w / tot_flights, 1) if tot_flights else 0.0,
         "avg_delay_min": round(delay_w / tot_flights, 1) if tot_flights else 0.0,
+        "cancelled": cancelled,
+        "cancel_rate": round(cancelled * 100 / total, 1) if total else 0.0,
         "tod": {k: round(v / tot_flights, 1) for k, v in tod_w.items()},
         "carriers": sorted(by_carrier.values(), key=lambda c: -c["on_time_pct"]),
     }

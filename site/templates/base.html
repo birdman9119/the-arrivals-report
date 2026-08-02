@@ -5,9 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}The Arrivals Report{% endblock %}</title>
 <link rel="stylesheet" href="static/style.css">
+<link rel="icon" href="static/favicon.svg" type="image/svg+xml">
+{% if og_url %}<link rel="canonical" href="{{ og_url }}">{% endif %}
+<meta property="og:site_name" content="The Arrivals Report">
+<meta property="og:type" content="website">
+{% if og_url %}<meta property="og:url" content="{{ og_url }}">{% endif %}
+{% if og_image %}<meta property="og:image" content="{{ og_image }}">{% endif %}
+<meta property="og:title" content="{% block ogtitle %}{% endblock %}">
+<meta property="og:description" content="{% block ogdesc %}{% endblock %}">
+<meta name="twitter:card" content="summary_large_image">
 {% block head %}{% endblock %}
 </head>
 <body>
+{% if stale %}<div class="banner" role="note">{{ stale }}</div>{% endif %}
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="index.html">The Arrivals Report</a>

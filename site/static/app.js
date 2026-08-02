@@ -50,6 +50,18 @@ function routePage(from, to, date) {
   location.href = url + q;
 }
 
+function resolveAirport(input, hidden) {
+  if (hidden.value) return hidden.value;
+  const raw = input.value.trim();
+  if (!raw) return null;
+  const exact = airports.find((a) => a.code === raw.toUpperCase());
+  if (exact) return exact.code;
+  const terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+  const hits = airports.filter((a) => terms.every((t) => (a.code + " " + a.city + " " + a.name).toLowerCase().includes(t)));
+  if (hits.length === 1) return hits[0].code;
+  return null;
+}
+
 const form = document.getElementById("trip-form");
 if (form) {
   setupCombo("from", "from-code", "from-suggest");
@@ -65,10 +77,10 @@ if (form) {
   });
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const from = document.getElementById("from-code").value;
-    const to = document.getElementById("to-code").value;
+    const from = resolveAirport(document.getElementById("from"), document.getElementById("from-code"));
+    const to = resolveAirport(document.getElementById("to"), document.getElementById("to-code"));
     const date = document.getElementById("date").value;
-    if (!from || !to) { msg.hidden = false; msg.textContent = "Pick an airport from the suggestions."; return; }
+    if (!from || !to) { msg.hidden = false; msg.textContent = "Type a 3-letter airport code (e.g. JFK) or pick from the suggestions."; return; }
     if (from === to) { msg.hidden = false; msg.textContent = "Pick two different airports."; return; }
     msg.hidden = true;
     routePage(from, to, date);

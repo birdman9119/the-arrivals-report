@@ -1,3 +1,4 @@
+import datetime
 import json
 import shutil
 import sys
@@ -8,9 +9,8 @@ from jinja2 import Environment, FileSystemLoader
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config import BASE_URL, HISTORY_DIR, OUTPUT_DIR, SITE_JSON
 
-TPL = Path(__file__).resolve().parent.parent / "site" / "templates"
+TPLEXE = Path(__file__).resolve().parent.parent / "site" / "templates"
 STATIC = Path(__file__).resolve().parent.parent / "site" / "static"
-
 GOOD = 80
 MID = 70
 
@@ -38,10 +38,50 @@ def sparkline(values, width=150, height=34):
     points = " ".join(f"{x(i):.1f},{y(v):.1f}" for i, v in pts)
     last_i, last_v = pts[-1]
     dot = f'<circle cx="{x(last_i):.1f}" cy="{y(last_v):.1f}" r="2.4"/>'
+    label = ", ".join(str(v) for v in values if v is not None) + "%"
     return (
-        f'<svg class="spark" width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
-        f'aria-hidden="true"><polyline points="{points}"/>{dot}</svg>'
+        f'<svg class="spark" role="img" width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
+        f'aria-label="Monthly on-time percentage: {label}"><title>Monthly on-time percentage: {label}</title>'
+        f'<polyline points="{points}"/>{dot}</svg>'
     )
+
+
+def months_behind(latest_key):
+    today = datetime.date.today()
+    ly, lm = map(int, latest_key.split("-"))
+    return (today.year - ly) * 12 + (today.month - lm)
+
+
+def stale_note(month, latest_key):
+    behind = months_behind(latest_key)
+    if behind < 2:
+        return None
+    return (
+        f"Data is from {month} — {behind} months behind. New months are added shortly "
+        f"after each DOT release (usually by mid-month)."
+    )
+
+
+def render_og_image(label, sub, path):
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        return False
+    W, H = 1200, 630
+    img = Image.new("RGB", (W, H), (17, 17, 17))
+    d = ImageDraw.Draw(img)
+    try:
+        font_big = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 72)
+        font_small = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 40)
+    except OSError:
+        font_big = ImageFont.load_default()
+        font_small = ImageFont.load_default()
+    d.text((80, 120), "The Arrivals Report", fill=(255, 255, 255), font=font_small)
+    d.rectangle((80, 190, 400, 194), fill=(15, 123, 61))
+    d.text((80, 260), label, fill=(255, 255, 255), font=font_big)
+    d.text((80, 380), sub, fill=(155, 155, 155), font=font_small)
+    img.save(path, "PNG", optimize=True)
+    return True
 
 
 def month_of_year_stats(routes):
@@ -56,26 +96,46 @@ def month_of_year_stats(routes):
 
 def build():
     data = json.loads(SITE_JSON.read_text())
-    env = Environment(loader=FileSystemLoader(str(TPL)))
+    env = Environment(loader=FileSystemLoader(str(TPLEXE)))
     env.filters["cls"] = cls
     env.filters["sparkline"] = sparkline
     env.filters["monthshort"] = lambda k: k[-5:]
 
     month = data["latest_month"]
+    latest_key = data["latest_month_key"]
+    month_count = data["month_count"]
     routes = data["routes"]
     airports = data["airports"]
     month_stats = month_of_year_stats(routes)
+
+    env.globals["stale"] = stale_note(month, latest_key)
+    total_flights = sum(r["flights"] for r in routes.values()) or 1
+    national = round(sum(r["on_time_pct"] * r["flights"] for r in routes.values()) / total_flights, 1)
+    env.globals["national"] = national
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
     OUTPUT_DIR.mkdir(parents=True)
     shutil.copytree(STATIC, OUTPUT_DIR / "static")
 
+    og_dir = OUTPUT_DIR / "og"
+    og_dir.mkdir(exist_ok=True)
+    render_og_image(
+        "Which airline should you book?",
+        "On-time performance by route and airline, from U.S. DOT data.",
+        og_dir / "home.png",
+    )
+
     popular = sorted(routes.values(), key=lambda r: -r["flights"])[:40]
-    ctx = {"month": month, "month_count": data["month_count"]}
+    ctx = {"month": month, "month_count": month_count}
     (OUTPUT_DIR / "index.html").write_text(
         env.get_template("index.html").render(
-            airports=airports, month=month, popular=popular, route_count=len(routes)
+            airports=airports,
+            month=month,
+            popular=popular,
+            route_count=len(routes),
+            og_url=BASE_URL,
+            og_image=BASE_URL + "og/home.png",
         )
     )
 
@@ -87,8 +147,19 @@ def build():
 
     route_index = []
     for key, r in routes.items():
-        page = env.get_template("route.html").render(r=r, monthly=month_stats.get(key, {}), **ctx)
+        page = env.get_template("route.html").render(
+            r=r,
+            monthly=month_stats.get(key, {}),
+            og_url=BASE_URL + f"{r['orig'].lower()}-{r['dest'].lower()}.html",
+            og_image=BASE_URL + f"og/{r['orig'].lower()}-{r['dest'].lower()}.png",
+            **ctx,
+        )
         (OUTPUT_DIR / f"{r['orig'].lower()}-{r['dest'].lower()}.html").write_text(page)
+        render_og_image(
+            f"{r['orig']} → {r['dest']}",
+            f"{r['carriers'][0]['name']} leads at {r['carriers'][0]['on_time_pct']}% on-time. {r['on_time_pct']}% of flights arrived on time in {month}.",
+            og_dir / f"{r['orig'].lower()}-{r['dest'].lower()}.png",
+        )
         route_index.append(
             {
                 "orig": r["orig"],
@@ -104,12 +175,22 @@ def build():
         out = [r for r in routes.values() if r["orig"] == code]
         inbound = [r for r in routes.values() if r["dest"] == code]
         page = env.get_template("airport.html").render(
-            a=info, code=code, outbound=out, inbound=inbound, month=month, month_count=data["month_count"]
+            a=info,
+            code=code,
+            outbound=out,
+            inbound=inbound,
+            og_url=BASE_URL + f"{code.lower()}.html",
+            og_image=BASE_URL + "og/home.png",
+            **ctx,
         )
         (OUTPUT_DIR / f"{code.lower()}.html").write_text(page)
 
     (OUTPUT_DIR / "methodology.html").write_text(
-        env.get_template("methodology.html").render(month=month)
+        env.get_template("methodology.html").render(month=month, month_count=month_count)
+    )
+
+    (OUTPUT_DIR / "404.html").write_text(
+        env.get_template("404.html").render(airports=airports, month=month)
     )
 
     sitemap = [BASE_URL, BASE_URL + "methodology.html"]

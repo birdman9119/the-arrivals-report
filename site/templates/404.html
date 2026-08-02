@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Page not found — The Arrivals Report{% endblock %}
+{% block content %}
+<section class="airport-head">
+  <p class="kicker">404</p>
+  <h1>That page doesn't exist</h1>
+  <p class="lede">The route you're looking for may not be tracked, or the link is stale.</p>
+  <p class="lede"><a class="back" href="index.html">← Back to the trip wizard</a></p>
+</section>
+<section>
+  <h2 class="section-title">Tracked airports</h2>
+  <p class="airport-links">
+    {% for code in airports|sort %}
+    <a href="{{ code|lower }}.html">{{ code }}</a>{% if not loop.last %} · {% endif %}
+    {% endfor %}
+  </p>
+</section>
+{% endblock %}
