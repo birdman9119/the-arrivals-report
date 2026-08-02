@@ -6,7 +6,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from config import BASE_URL, OUTPUT_DIR, SITE_JSON
+from config import BASE_URL, HISTORY_DIR, OUTPUT_DIR, SITE_JSON
 
 TPL = Path(__file__).resolve().parent.parent / "site" / "templates"
 STATIC = Path(__file__).resolve().parent.parent / "site" / "static"
@@ -44,8 +44,14 @@ def sparkline(values, width=150, height=34):
     )
 
 
-def trend_months(months):
-    return [m[-2:] for m in months]
+def month_of_year_stats(routes):
+    stats = {}
+    for hp in sorted(HISTORY_DIR.glob("*.json")):
+        hist = json.loads(hp.read_text())
+        month_num = int(hist["month"][-2:])
+        for key, route in hist["routes"].items():
+            stats.setdefault(key, {})[month_num] = route["on_time_pct"]
+    return stats
 
 
 def build():
@@ -58,7 +64,7 @@ def build():
     month = data["latest_month"]
     routes = data["routes"]
     airports = data["airports"]
-    trend = trend_months(data.get("month_keys", []))
+    month_stats = month_of_year_stats(routes)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     shutil.rmtree(OUTPUT_DIR, ignore_errors=True)
@@ -73,9 +79,15 @@ def build():
         )
     )
 
+    airport_list = [
+        {"code": c, "city": info["city"], "name": info["name"], "label": f"{c} — {info['city']} ({info['name']})"}
+        for c, info in sorted(airports.items())
+    ]
+    (OUTPUT_DIR / "airports.json").write_text(json.dumps(airport_list))
+
     route_index = []
     for key, r in routes.items():
-        page = env.get_template("route.html").render(r=r, **ctx)
+        page = env.get_template("route.html").render(r=r, monthly=month_stats.get(key, {}), **ctx)
         (OUTPUT_DIR / f"{r['orig'].lower()}-{r['dest'].lower()}.html").write_text(page)
         route_index.append(
             {

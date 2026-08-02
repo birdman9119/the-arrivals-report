@@ -1,12 +1,29 @@
 {% extends "base.html" %}
-{% block title %}{{ r.label }} — which airline is most reliable? ({{ month }}){% endblock %}
-{% block head %}<meta name="description" content="12-month on-time performance by airline on {{ r.label }}. {{ r.carriers[0].name }} leads at {{ r.carriers[0].on_time_pct }}% on-time. Source: U.S. DOT.">{% endblock %}
+{% block title %}{{ r.label }} — which airline should you book? ({{ month }}){% endblock %}
+{% block head %}<meta name="description" content="On-time performance by airline on {{ r.label }}. {{ r.carriers[0].name }} leads at {{ r.carriers[0].on_time_pct }}% on-time over {{ month_count }} months. Source: U.S. DOT.">{% endblock %}
 {% block content %}
 <section class="airport-head">
+  <p class="kicker"><a class="back" href="index.html">← Change trip</a></p>
   <p class="kicker">{{ r.orig }} → {{ r.dest }}</p>
   <h1>{{ r.label }}</h1>
-  <p class="lede">12-month on-time performance by airline. {{ "{:,}".format(r.flights) }} flights analyzed across {{ month_count }} months. Latest month: {{ month }}. Source: U.S. DOT.</p>
 </section>
+
+<section class="decision" id="decision">
+  <p class="decision-line">
+    <span id="trip-line">Latest data ({{ month }}):</span>
+    <strong>{{ r.on_time_pct }}%</strong> of flights on this route arrived on time —
+    {{ "{:,}".format(r.flights) }} flights analyzed over {{ month_count }} months.
+  </p>
+  <p class="decision-pick" id="decision-pick">
+    Best pick: <strong>{{ r.carriers[0].name }} ({{ r.carriers[0].code }})</strong>
+    at {{ r.carriers[0].on_time_pct }}% on-time.
+    {% if r.carriers|length > 1 and r.carriers[1].on_time_pct >= r.carriers[0].on_time_pct - 2 %}
+    Close race — {{ r.carriers[1].name }} is within 2 points.
+    {% endif %}
+  </p>
+  <p class="decision-note" id="decision-note" hidden></p>
+</section>
+
 {% if r.tod and r.tod.morning and r.tod.evening %}
 {% set delta = r.tod.morning - r.tod.evening %}
 {% if delta >= 5 or delta <= -5 %}
@@ -15,12 +32,13 @@
 </section>
 {% endif %}
 {% endif %}
+
 <section>
   <table class="airline-table">
     <thead>
       <tr>
         <th>Airline</th>
-        <th class="num">12-mo on-time</th>
+        <th class="num">On-time</th>
         <th class="num">Trend</th>
         <th class="num">Avg. delay</th>
         <th class="num">Flights</th>
@@ -28,8 +46,8 @@
     </thead>
     <tbody>
       {% for al in r.carriers %}
-      <tr>
-        <td>{{ al.name }} <span class="muted">({{ al.code }})</span></td>
+      <tr class="{{ 'best-row' if loop.first }}">
+        {% if loop.first %}<td class="best-tag"><span class="tag">Top pick</span> {{ al.name }} <span class="muted">({{ al.code }})</span></td>{% else %}<td>{{ al.name }} <span class="muted">({{ al.code }})</span></td>{% endif %}
         <td class="num {{ al.on_time_pct|cls }}">{{ al.on_time_pct }}%</td>
         <td class="num">{{ al.trend|sparkline }}</td>
         <td class="num">{{ al.avg_delay_min }} min</td>
@@ -42,4 +60,23 @@
 <section class="affiliate">
   <p>Flying {{ r.orig }} → {{ r.dest }}? <a href="#">Luggage tracker</a> · <a href="#">Travel insurance</a></p>
 </section>
+<script>
+(function () {
+  var monthly = {{ monthly|tojson }};
+  var m = new URLSearchParams(location.search).get("date");
+  if (!m) return;
+  var d = new Date(m + "T00:00:00");
+  if (isNaN(d)) return;
+  var monthNum = d.getMonth() + 1;
+  var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var name = months[monthNum - 1];
+  var trip = document.getElementById("trip-line");
+  if (trip) trip.textContent = "Flying in " + name + " " + d.getFullYear() + " — data is from the most recent month (" + {{ (month|string)|tojson }} + "):";
+  if (monthly[monthNum] != null) {
+    var note = document.getElementById("decision-note");
+    note.hidden = false;
+    note.textContent = "Historically, " + name + " flights on this route are on time " + monthly[monthNum] + "% of the time.";
+  }
+})();
+</script>
 {% endblock %}

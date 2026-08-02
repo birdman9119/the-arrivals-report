@@ -1,15 +1,36 @@
 {% extends "base.html" %}
-{% block title %}The Arrivals Report — which airline is most reliable on your route?{% endblock %}
-{% block head %}<meta name="description" content="12-month on-time performance by airline for every major U.S. domestic route. Which airline should you book? Source: U.S. DOT.">{% endblock %}
+{% block title %}The Arrivals Report — which airline should you book?{% endblock %}
+{% block head %}<meta name="description" content="Enter your route and travel date to see on-time performance by airline, from U.S. DOT data.">{% endblock %}
 {% block content %}
 <section class="hero">
-  <h1>Which airline is most reliable on your route?</h1>
-  <p class="lede">{{ route_count }} routes. Up to 12 months of DOT data, by airline.</p>
-  <input type="search" id="route-search" placeholder="Search routes… (e.g. JFK to SFO, New York San Francisco)" autocomplete="off">
-  <div id="results" hidden></div>
+  <h1>Which airline should you book?</h1>
+  <p class="lede">Enter your trip. We'll show you how each airline performs on your route.</p>
+  <form class="wizard" id="trip-form" action="index.html">
+    <div class="wizard-row">
+      <label class="field">
+        <span>From</span>
+        <input type="text" id="from" placeholder="e.g. JFK, New York" autocomplete="off" required>
+        <input type="hidden" id="from-code">
+        <div class="suggest" id="from-suggest" hidden></div>
+      </label>
+      <button type="button" class="swap" id="swap" title="Swap airports" aria-label="Swap airports">⇄</button>
+      <label class="field">
+        <span>To</span>
+        <input type="text" id="to" placeholder="e.g. SFO, San Francisco" autocomplete="off" required>
+        <input type="hidden" id="to-code">
+        <div class="suggest" id="to-suggest" hidden></div>
+      </label>
+      <label class="field field-date">
+        <span>Travel date</span>
+        <input type="date" id="date">
+      </label>
+      <button type="submit" class="cta">See airline stats</button>
+    </div>
+    <p class="wizard-msg" id="wizard-msg" hidden></p>
+  </form>
 </section>
 <section>
-  <h2 class="section-title">Busiest routes <span class="muted">— latest month: {{ month }}</span></h2>
+  <h2 class="section-title">Most-searched routes <span class="muted">— latest data: {{ month }}</span></h2>
   <table class="route-table">
     <thead>
       <tr><th>Route</th><th class="num">Best airline</th><th class="num">On-time</th><th class="num">Flights</th></tr>
