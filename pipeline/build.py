@@ -7,7 +7,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from config import BASE_URL, HISTORY_DIR, OUTPUT_DIR, SITE_JSON
+from config import BASE_URL, COORDS, HISTORY_DIR, OUTPUT_DIR, SITE_JSON
 
 TPLEXE = Path(__file__).resolve().parent.parent / "site" / "templates"
 STATIC = Path(__file__).resolve().parent.parent / "site" / "static"
@@ -100,8 +100,17 @@ def month_of_year_stats(routes):
         hist = json.loads(hp.read_text())
         month_num = int(hist["month"][-2:])
         for key, route in hist["routes"].items():
-            stats.setdefault(key, {})[month_num] = route["on_time_pct"]
-    return stats
+            s = stats.setdefault(key, {}).setdefault(month_num, {"pct": 0.0, "flights": 0})
+            s["pct"] += route["on_time_pct"] * route["flights"]
+            s["flights"] += route["flights"]
+    out = {}
+    for key, months in stats.items():
+        out[key] = {
+            m: round(s["pct"] / s["flights"], 1)
+            for m, s in months.items()
+            if s["flights"]
+        }
+    return out
 
 
 def build():
@@ -153,7 +162,14 @@ def build():
     )
 
     airport_list = [
-        {"code": c, "city": info["city"], "name": info["name"], "label": f"{c} — {info['city']} ({info['name']})"}
+        {
+            "code": c,
+            "city": info["city"],
+            "name": info["name"],
+            "label": f"{c} — {info['city']} ({info['name']})",
+            "lat": COORDS.get(c, (0, 0))[0],
+            "lon": COORDS.get(c, (0, 0))[1],
+        }
         for c, info in sorted(airports.items())
     ]
     (OUTPUT_DIR / "airports.json").write_text(json.dumps(airport_list))
@@ -180,6 +196,10 @@ def build():
                 "label": r["label"],
                 "pct": r["on_time_pct"],
                 "flights": r["flights"],
+                "best": r["carriers"][0]["name"] if r["carriers"] else None,
+                "best_pct": r["carriers"][0]["on_time_pct"] if r["carriers"] else None,
+                "cancel_rate": r["cancel_rate"],
+                "ytd_label": r["ytd_label"],
             }
         )
     (OUTPUT_DIR / "routes.json").write_text(json.dumps(route_index))

@@ -9,6 +9,7 @@ Static site in `output/` (built by CI), deployed to GitHub Pages.
 ```
 pipeline/fetch.py      --year Y --month M   download one month (resume-safe)
 pipeline/fetch.py      --backfill N         download the last N months (one-time)
+pipeline/fetch.py      --since YYYY-M       download every month from YYYY-M up to the latest
 pipeline/fetch.py      --auto               download the most recent available month
 pipeline/aggregate.py                       append latest month to data/history/, build data/site.json
 pipeline/build.py                           render output/ static site
@@ -21,9 +22,11 @@ pipeline/build.py                           render output/ static site
 Source: [BTS On-Time Performance](https://www.transtats.bts.gov/), reporting carriers, US domestic flights between tracked airports (see `pipeline/config.py`).
 
 - On-time: arrived within 15 minutes of schedule (DOT definition); cancelled/diverted excluded.
+- Year-to-date: the headline number on each page is the running total for the calendar year (Jan through the latest month), weighted by flight volume.
 - Avg. delay: mean arrival delay, early arrivals counted as zero (DOT "ArrDelayMinutes").
-- Trend: 12-month rolling on-time percentage per airline.
+- Trend: monthly on-time percentage per airline across the rolling window (last 12 months).
 - Morning/evening: scheduled departures before noon vs after 5pm.
+- Historical month averages (pick a date in the wizard): the weighted average of that calendar month across all years on file (since 2020).
 
 ## Design constraints
 

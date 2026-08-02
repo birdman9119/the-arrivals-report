@@ -33,6 +33,14 @@
   </form>
   <p class="lede stats-line">{{ route_count }} routes · {{ airports|length }} airports · {{ month_count }} months of DOT data</p>
 </section>
+<section class="map-section">
+  <h2 class="section-title">The U.S. flight network <span class="muted">— hover a route for its story</span></h2>
+  <div class="map-wrap" id="map-wrap">
+    {% include "us.svg" %}
+    <div class="map-tip" id="map-tip" hidden></div>
+  </div>
+  <p class="map-legend">Every line is a route between two tracked airports. Your route lights up as you type it above.</p>
+</section>
 <section>
   <h2 class="section-title">Most-flown routes <span class="muted">— year to date ({{ ytd_label }})</span></h2>
   <table class="route-table">

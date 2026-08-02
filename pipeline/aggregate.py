@@ -58,7 +58,8 @@ AIRLINE_NAMES = {
 def load_month(year, month):
     zpath = RAW_DIR / f"{year}_{month}.zip"
     with zipfile.ZipFile(zpath) as z:
-        with z.open(z.namelist()[0]) as f:
+        csv = next(n for n in z.namelist() if n.lower().endswith(".csv"))
+        with z.open(csv) as f:
             return pd.read_csv(f, usecols=USECOLS, low_memory=False)
 
 

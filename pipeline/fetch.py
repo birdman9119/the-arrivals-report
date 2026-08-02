@@ -1,6 +1,7 @@
 import argparse
 import datetime
 import sys
+import time
 import urllib.request
 from pathlib import Path
 
@@ -55,7 +56,34 @@ def main():
     ap.add_argument("--month", type=int)
     ap.add_argument("--auto", action="store_true", help="download the most recent available month")
     ap.add_argument("--backfill", type=int, metavar="N", help="download the last N months")
+    ap.add_argument("--since", type=str, metavar="YYYY-M", help="download every month from YYYY-M up to the latest available")
     args = ap.parse_args()
+
+    if args.since:
+        y, m = map(int, args.since.split("-"))
+        fails = 0
+        while fails < 3:
+            dest = RAW_DIR / f"{y}_{m}.zip"
+            if dest.exists():
+                print(f"have {dest}")
+            elif fetch(zip_url(y, m), dest):
+                print(f"saved {dest} ({dest.stat().st_size} bytes)")
+            else:
+                print(f"no data for {y}-{m} (yet)")
+                fails += 1
+                if fails < 3:
+                    m += 1
+                    if m > 12:
+                        y += 1
+                        m = 1
+                continue
+            fails = 0
+            time.sleep(6)
+            m += 1
+            if m > 12:
+                y += 1
+                m = 1
+        return 0
 
     if args.auto:
         for lag in range(1, 7):
