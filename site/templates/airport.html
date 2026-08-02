@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ a.city }} ({{ a.code }}) — airline on-time performance, {{ month }}{% endblock %}
+{% block head %}<meta name="description" content="{{ a.name }} arrivals by airline: on-time percentage, average delay, and taxi-in time for {{ month }}. Source: U.S. DOT.">{% endblock %}
+{% block content %}
+<section class="airport-head">
+  <p class="kicker">{{ a.code }}</p>
+  <h1>{{ a.city }}<br><span class="muted">{{ a.name }}</span></h1>
+  <p class="lede">Arrivals, {{ month }}. {{ "{:,}".format(a.flights) }} flights. {{ a.cancelled }} cancelled. Source: U.S. DOT.</p>
+</section>
+<section>
+  <table class="airline-table">
+    <thead>
+      <tr>
+        <th>Airline</th>
+        <th class="num">On-time</th>
+        <th class="num">Avg. delay</th>
+        <th class="num">Avg. taxi-in</th>
+        <th class="num">Flights</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for al in a.airlines %}
+      <tr>
+        <td>{{ al.name }} <span class="muted">({{ al.code }})</span></td>
+        <td class="num {{ 'good' if al.on_time_pct >= 80 else 'mid' if al.on_time_pct >= 70 else 'bad' }}">{{ al.on_time_pct }}%</td>
+        <td class="num">{{ al.avg_delay_min }} min</td>
+        <td class="num">{{ al.avg_taxi_in_min }} min</td>
+        <td class="num">{{ "{:,}".format(al.flights) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+<section class="affiliate">
+  <p>Flying through {{ a.city }}? <a href="#">Luggage tracker</a> · <a href="#">Travel insurance</a></p>
+</section>
+{% endblock %}

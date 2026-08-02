@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Methodology — The Arrivals Report{% endblock %}
+{% block content %}
+<section>
+  <h1>Methodology</h1>
+  <p class="lede">Where the numbers come from, and what they mean.</p>
+</section>
+<section class="prose">
+  <h2>Source</h2>
+  <p>All data is the U.S. Department of Transportation's Bureau of Transportation Statistics <a href="https://www.transtats.bts.gov/">On-Time Performance database</a>, which covers scheduled passenger flights by U.S. reporting carriers on domestic routes. We use the most recent complete month ({{ month }}).</p>
+  <h2>Definitions</h2>
+  <p><strong>On-time</strong> means the flight arrived within 15 minutes of its scheduled arrival time — the DOT's standard definition. Cancelled and diverted flights are counted separately, not as on-time.</p>
+  <p><strong>Avg. delay</strong> is the mean arrival delay in minutes across all arrivals by that airline at that airport (early arrivals count as zero, matching the DOT's "ArrDelayMinutes" measure).</p>
+  <p><strong>Avg. taxi-in</strong> is the mean time in minutes from wheels-on to the gate — the walk off the plane part of your arrival, before the bag claim.</p>
+  <h2>What this is not</h2>
+  <p>There is no public data on baggage claim wait times by airline — no airport or agency publishes it. This site intentionally doesn't pretend otherwise. "Bags lost" rates are published by the DOT only at the national, per-airline level, so they are not shown per airport.</p>
+  <h2>Update schedule</h2>
+  <p>Data is refreshed monthly, within days of each DOT release.</p>
+</section>
+{% endblock %}

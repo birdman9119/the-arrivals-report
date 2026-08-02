@@ -1,0 +1,30 @@
+name: monthly-update
+
+on:
+  schedule:
+    - cron: "0 4 15 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pandas jinja2
+      - name: Fetch latest DOT data
+        run: python3 pipeline/fetch.py --auto
+      - name: Aggregate + build site
+        run: |
+          python3 pipeline/aggregate.py
+          python3 pipeline/build.py
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          force_orphan: true

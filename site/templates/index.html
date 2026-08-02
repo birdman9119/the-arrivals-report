@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}The Arrivals Report — on-time performance by airport{% endblock %}
+{% block head %}<meta name="description" content="On-time performance for U.S. airlines, per airport. Data: DOT Bureau of Transportation Statistics, {{ month }}.">{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>How often are flights on time — at each airport, by airline?</h1>
+  <p class="lede">One table per airport. Data for {{ month }}. Source: U.S. DOT Bureau of Transportation Statistics.</p>
+  <input type="search" id="airport-search" placeholder="Search airports… (e.g. LAX, Atlanta, SFO)" autocomplete="off">
+</section>
+<section>
+  <table class="airport-list">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Airport</th>
+        <th class="num">On-time</th>
+        <th class="num">Flights</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in airports %}
+      <tr class="airport-row" data-search="{{ a.code }} {{ a.name }} {{ a.city }}">
+        <td class="code"><a href="{{ a.code|lower }}.html">{{ a.code }}</a></td>
+        <td><a href="{{ a.code|lower }}.html">{{ a.city }} — {{ a.name }}</a></td>
+        <td class="num {{ 'good' if a.on_time_pct >= 80 else 'mid' if a.on_time_pct >= 70 else 'bad' }}">{{ a.on_time_pct }}%</td>
+        <td class="num">{{ "{:,}".format(a.flights) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="empty" id="no-results" hidden>No airports match.</p>
+</section>
+<script src="/static/app.js"></script>
+{% endblock %}

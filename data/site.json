@@ -1,0 +1,2099 @@
+{
+  "month": "May 2026",
+  "year": 2026,
+  "month_num": 5,
+  "airports": [
+    {
+      "code": "EWR",
+      "name": "Newark Liberty International",
+      "city": "Newark",
+      "flights": 10235,
+      "on_time_pct": 87.5,
+      "cancelled": 97,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 2446,
+          "on_time_pct": 92.0,
+          "avg_delay_min": -9.1,
+          "avg_taxi_in_min": 11.3
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 279,
+          "on_time_pct": 90.0,
+          "avg_delay_min": -16.3,
+          "avg_taxi_in_min": 7.7
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 5730,
+          "on_time_pct": 87.5,
+          "avg_delay_min": -3.0,
+          "avg_taxi_in_min": 9.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 561,
+          "on_time_pct": 84.3,
+          "avg_delay_min": 2.3,
+          "avg_taxi_in_min": 9.6
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 412,
+          "on_time_pct": 82.5,
+          "avg_delay_min": 4.3,
+          "avg_taxi_in_min": 9.2
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 123,
+          "on_time_pct": 80.5,
+          "avg_delay_min": -4.4,
+          "avg_taxi_in_min": 10.5
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 590,
+          "on_time_pct": 75.1,
+          "avg_delay_min": 10.0,
+          "avg_taxi_in_min": 9.4
+        }
+      ]
+    },
+    {
+      "code": "SLC",
+      "name": "Salt Lake City International",
+      "city": "Salt Lake City",
+      "flights": 10099,
+      "on_time_pct": 85.8,
+      "cancelled": 47,
+      "airlines": [
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 3288,
+          "on_time_pct": 90.5,
+          "avg_delay_min": -4.9,
+          "avg_taxi_in_min": 6.5
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 4743,
+          "on_time_pct": 87.3,
+          "avg_delay_min": -1.1,
+          "avg_taxi_in_min": 7.3
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 279,
+          "on_time_pct": 84.6,
+          "avg_delay_min": -1.2,
+          "avg_taxi_in_min": 10.0
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 112,
+          "on_time_pct": 83.0,
+          "avg_delay_min": 0.3,
+          "avg_taxi_in_min": 6.3
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 361,
+          "on_time_pct": 80.9,
+          "avg_delay_min": 5.8,
+          "avg_taxi_in_min": 6.3
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 380,
+          "on_time_pct": 71.6,
+          "avg_delay_min": 11.2,
+          "avg_taxi_in_min": 7.4
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 901,
+          "on_time_pct": 69.8,
+          "avg_delay_min": 10.7,
+          "avg_taxi_in_min": 5.5
+        }
+      ]
+    },
+    {
+      "code": "IAD",
+      "name": "Washington Dulles International",
+      "city": "Washington",
+      "flights": 5421,
+      "on_time_pct": 85.5,
+      "cancelled": 28,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 680,
+          "on_time_pct": 89.3,
+          "avg_delay_min": -4.3,
+          "avg_taxi_in_min": 9.5
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 120,
+          "on_time_pct": 88.3,
+          "avg_delay_min": -11.0,
+          "avg_taxi_in_min": 5.8
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 3536,
+          "on_time_pct": 86.9,
+          "avg_delay_min": -1.6,
+          "avg_taxi_in_min": 7.6
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 294,
+          "on_time_pct": 82.3,
+          "avg_delay_min": 6.7,
+          "avg_taxi_in_min": 7.0
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 257,
+          "on_time_pct": 80.5,
+          "avg_delay_min": 18.9,
+          "avg_taxi_in_min": 7.3
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 167,
+          "on_time_pct": 77.8,
+          "avg_delay_min": 6.9,
+          "avg_taxi_in_min": 13.5
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 159,
+          "on_time_pct": 75.5,
+          "avg_delay_min": 8.6,
+          "avg_taxi_in_min": 5.9
+        }
+      ]
+    },
+    {
+      "code": "MSP",
+      "name": "Minneapolis-Saint Paul International",
+      "city": "Minneapolis",
+      "flights": 10339,
+      "on_time_pct": 85.3,
+      "cancelled": 61,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 107,
+          "on_time_pct": 94.4,
+          "avg_delay_min": -7.2,
+          "avg_taxi_in_min": 6.1
+        },
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 102,
+          "on_time_pct": 91.2,
+          "avg_delay_min": -11.5,
+          "avg_taxi_in_min": 5.6
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 2785,
+          "on_time_pct": 88.4,
+          "avg_delay_min": -0.2,
+          "avg_taxi_in_min": 6.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 5674,
+          "on_time_pct": 86.4,
+          "avg_delay_min": 1.2,
+          "avg_taxi_in_min": 6.4
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 134,
+          "on_time_pct": 82.1,
+          "avg_delay_min": -1.6,
+          "avg_taxi_in_min": 4.1
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 497,
+          "on_time_pct": 79.1,
+          "avg_delay_min": 5.4,
+          "avg_taxi_in_min": 5.5
+        },
+        {
+          "code": "OH",
+          "name": "PSA Airlines",
+          "flights": 121,
+          "on_time_pct": 77.7,
+          "avg_delay_min": -1.2,
+          "avg_taxi_in_min": 4.2
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 456,
+          "on_time_pct": 74.3,
+          "avg_delay_min": 9.3,
+          "avg_taxi_in_min": 3.9
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 351,
+          "on_time_pct": 71.8,
+          "avg_delay_min": 12.5,
+          "avg_taxi_in_min": 4.9
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 112,
+          "on_time_pct": 63.4,
+          "avg_delay_min": 16.6,
+          "avg_taxi_in_min": 6.8
+        }
+      ]
+    },
+    {
+      "code": "CLT",
+      "name": "Charlotte Douglas International",
+      "city": "Charlotte",
+      "flights": 15713,
+      "on_time_pct": 83.6,
+      "cancelled": 58,
+      "airlines": [
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 496,
+          "on_time_pct": 87.3,
+          "avg_delay_min": -5.0,
+          "avg_taxi_in_min": 15.5
+        },
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 348,
+          "on_time_pct": 86.5,
+          "avg_delay_min": -4.6,
+          "avg_taxi_in_min": 11.8
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 10067,
+          "on_time_pct": 84.7,
+          "avg_delay_min": 2.2,
+          "avg_taxi_in_min": 12.4
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 492,
+          "on_time_pct": 83.3,
+          "avg_delay_min": 2.0,
+          "avg_taxi_in_min": 10.8
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 293,
+          "on_time_pct": 81.9,
+          "avg_delay_min": 4.1,
+          "avg_taxi_in_min": 17.8
+        },
+        {
+          "code": "OH",
+          "name": "PSA Airlines",
+          "flights": 3307,
+          "on_time_pct": 81.8,
+          "avg_delay_min": 4.5,
+          "avg_taxi_in_min": 15.6
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 224,
+          "on_time_pct": 79.0,
+          "avg_delay_min": 9.3,
+          "avg_taxi_in_min": 17.7
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 205,
+          "on_time_pct": 72.2,
+          "avg_delay_min": 11.6,
+          "avg_taxi_in_min": 12.5
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 272,
+          "on_time_pct": 70.6,
+          "avg_delay_min": 11.9,
+          "avg_taxi_in_min": 11.0
+        }
+      ]
+    },
+    {
+      "code": "JFK",
+      "name": "John F. Kennedy International",
+      "city": "New York",
+      "flights": 8450,
+      "on_time_pct": 83.3,
+      "cancelled": 86,
+      "airlines": [
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 2848,
+          "on_time_pct": 85.7,
+          "avg_delay_min": -2.0,
+          "avg_taxi_in_min": 8.8
+        },
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 1178,
+          "on_time_pct": 85.0,
+          "avg_delay_min": -1.1,
+          "avg_taxi_in_min": 12.1
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 2676,
+          "on_time_pct": 83.6,
+          "avg_delay_min": 1.5,
+          "avg_taxi_in_min": 12.7
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 350,
+          "on_time_pct": 81.7,
+          "avg_delay_min": -4.0,
+          "avg_taxi_in_min": 12.1
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1368,
+          "on_time_pct": 76.8,
+          "avg_delay_min": 7.6,
+          "avg_taxi_in_min": 11.5
+        }
+      ]
+    },
+    {
+      "code": "DTW",
+      "name": "Detroit Metropolitan Wayne County",
+      "city": "Detroit",
+      "flights": 9990,
+      "on_time_pct": 82.6,
+      "cancelled": 130,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 569,
+          "on_time_pct": 86.8,
+          "avg_delay_min": 0.7,
+          "avg_taxi_in_min": 10.8
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 134,
+          "on_time_pct": 86.6,
+          "avg_delay_min": -7.7,
+          "avg_taxi_in_min": 9.6
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 2304,
+          "on_time_pct": 84.6,
+          "avg_delay_min": 5.5,
+          "avg_taxi_in_min": 8.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 5345,
+          "on_time_pct": 84.3,
+          "avg_delay_min": 2.8,
+          "avg_taxi_in_min": 8.8
+        },
+        {
+          "code": "OH",
+          "name": "PSA Airlines",
+          "flights": 166,
+          "on_time_pct": 80.7,
+          "avg_delay_min": 1.2,
+          "avg_taxi_in_min": 11.6
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 433,
+          "on_time_pct": 80.1,
+          "avg_delay_min": 6.9,
+          "avg_taxi_in_min": 9.8
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 202,
+          "on_time_pct": 77.2,
+          "avg_delay_min": 7.8,
+          "avg_taxi_in_min": 9.4
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 267,
+          "on_time_pct": 73.0,
+          "avg_delay_min": 6.3,
+          "avg_taxi_in_min": 12.5
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 400,
+          "on_time_pct": 59.8,
+          "avg_delay_min": 19.5,
+          "avg_taxi_in_min": 7.9
+        }
+      ]
+    },
+    {
+      "code": "PDX",
+      "name": "Portland International",
+      "city": "Portland",
+      "flights": 5507,
+      "on_time_pct": 82.5,
+      "cancelled": 27,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 2063,
+          "on_time_pct": 87.4,
+          "avg_delay_min": -4.3,
+          "avg_taxi_in_min": 4.6
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 1017,
+          "on_time_pct": 86.1,
+          "avg_delay_min": 0.2,
+          "avg_taxi_in_min": 5.5
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 602,
+          "on_time_pct": 85.5,
+          "avg_delay_min": 3.0,
+          "avg_taxi_in_min": 4.7
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 616,
+          "on_time_pct": 79.2,
+          "avg_delay_min": 4.9,
+          "avg_taxi_in_min": 4.6
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 685,
+          "on_time_pct": 71.2,
+          "avg_delay_min": 11.5,
+          "avg_taxi_in_min": 4.1
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 423,
+          "on_time_pct": 67.8,
+          "avg_delay_min": 12.6,
+          "avg_taxi_in_min": 6.2
+        }
+      ]
+    },
+    {
+      "code": "SEA",
+      "name": "Seattle-Tacoma International",
+      "city": "Seattle",
+      "flights": 14489,
+      "on_time_pct": 82.4,
+      "cancelled": 80,
+      "airlines": [
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 100,
+          "on_time_pct": 87.0,
+          "avg_delay_min": -1.9,
+          "avg_taxi_in_min": 16.0
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 2576,
+          "on_time_pct": 85.8,
+          "avg_delay_min": -2.3,
+          "avg_taxi_in_min": 13.2
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 6771,
+          "on_time_pct": 84.8,
+          "avg_delay_min": -2.3,
+          "avg_taxi_in_min": 12.5
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 114,
+          "on_time_pct": 84.2,
+          "avg_delay_min": -3.1,
+          "avg_taxi_in_min": 14.1
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 2842,
+          "on_time_pct": 81.6,
+          "avg_delay_min": 0.3,
+          "avg_taxi_in_min": 13.7
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 815,
+          "on_time_pct": 77.4,
+          "avg_delay_min": 2.6,
+          "avg_taxi_in_min": 11.6
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 625,
+          "on_time_pct": 66.2,
+          "avg_delay_min": 15.4,
+          "avg_taxi_in_min": 15.4
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 610,
+          "on_time_pct": 66.2,
+          "avg_delay_min": 10.4,
+          "avg_taxi_in_min": 11.4
+        }
+      ]
+    },
+    {
+      "code": "PHL",
+      "name": "Philadelphia International",
+      "city": "Philadelphia",
+      "flights": 9155,
+      "on_time_pct": 81.5,
+      "cancelled": 100,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 561,
+          "on_time_pct": 87.3,
+          "avg_delay_min": -3.9,
+          "avg_taxi_in_min": 7.7
+        },
+        {
+          "code": "OH",
+          "name": "PSA Airlines",
+          "flights": 1642,
+          "on_time_pct": 84.0,
+          "avg_delay_min": 1.9,
+          "avg_taxi_in_min": 7.0
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 162,
+          "on_time_pct": 82.7,
+          "avg_delay_min": -1.6,
+          "avg_taxi_in_min": 7.5
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 4433,
+          "on_time_pct": 82.4,
+          "avg_delay_min": 6.3,
+          "avg_taxi_in_min": 7.1
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 595,
+          "on_time_pct": 82.0,
+          "avg_delay_min": 2.4,
+          "avg_taxi_in_min": 7.2
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 447,
+          "on_time_pct": 80.3,
+          "avg_delay_min": 4.3,
+          "avg_taxi_in_min": 6.6
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 775,
+          "on_time_pct": 77.4,
+          "avg_delay_min": 11.0,
+          "avg_taxi_in_min": 12.0
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 437,
+          "on_time_pct": 63.8,
+          "avg_delay_min": 15.8,
+          "avg_taxi_in_min": 6.8
+        }
+      ]
+    },
+    {
+      "code": "HNL",
+      "name": "Daniel K. Inouye International",
+      "city": "Honolulu",
+      "flights": 4896,
+      "on_time_pct": 81.3,
+      "cancelled": 56,
+      "airlines": [
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 1069,
+          "on_time_pct": 91.4,
+          "avg_delay_min": -5.8,
+          "avg_taxi_in_min": 5.1
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 309,
+          "on_time_pct": 86.1,
+          "avg_delay_min": -4.5,
+          "avg_taxi_in_min": 6.6
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 432,
+          "on_time_pct": 81.0,
+          "avg_delay_min": -2.3,
+          "avg_taxi_in_min": 7.1
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 2858,
+          "on_time_pct": 77.9,
+          "avg_delay_min": 7.4,
+          "avg_taxi_in_min": 10.4
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 228,
+          "on_time_pct": 71.9,
+          "avg_delay_min": 11.2,
+          "avg_taxi_in_min": 9.8
+        }
+      ]
+    },
+    {
+      "code": "ATL",
+      "name": "Hartsfield-Jackson Atlanta International",
+      "city": "Atlanta",
+      "flights": 27183,
+      "on_time_pct": 80.8,
+      "cancelled": 349,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 110,
+          "on_time_pct": 88.2,
+          "avg_delay_min": -6.1,
+          "avg_taxi_in_min": 9.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 21026,
+          "on_time_pct": 84.0,
+          "avg_delay_min": 1.0,
+          "avg_taxi_in_min": 8.8
+        },
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 290,
+          "on_time_pct": 78.3,
+          "avg_delay_min": 3.1,
+          "avg_taxi_in_min": 10.1
+        },
+        {
+          "code": "OH",
+          "name": "PSA Airlines",
+          "flights": 290,
+          "on_time_pct": 76.9,
+          "avg_delay_min": 7.4,
+          "avg_taxi_in_min": 9.2
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 688,
+          "on_time_pct": 75.6,
+          "avg_delay_min": 9.9,
+          "avg_taxi_in_min": 9.9
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 513,
+          "on_time_pct": 74.9,
+          "avg_delay_min": 19.0,
+          "avg_taxi_in_min": 9.2
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 2006,
+          "on_time_pct": 67.0,
+          "avg_delay_min": 14.2,
+          "avg_taxi_in_min": 25.7
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 1323,
+          "on_time_pct": 65.8,
+          "avg_delay_min": 16.0,
+          "avg_taxi_in_min": 7.3
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 233,
+          "on_time_pct": 65.7,
+          "avg_delay_min": 16.1,
+          "avg_taxi_in_min": 14.5
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 633,
+          "on_time_pct": 65.6,
+          "avg_delay_min": 20.3,
+          "avg_taxi_in_min": 10.5
+        }
+      ]
+    },
+    {
+      "code": "LAX",
+      "name": "Los Angeles International",
+      "city": "Los Angeles",
+      "flights": 16220,
+      "on_time_pct": 80.5,
+      "cancelled": 91,
+      "airlines": [
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 3229,
+          "on_time_pct": 87.9,
+          "avg_delay_min": 0.0,
+          "avg_taxi_in_min": 11.5
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 2721,
+          "on_time_pct": 84.8,
+          "avg_delay_min": -0.2,
+          "avg_taxi_in_min": 11.4
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 512,
+          "on_time_pct": 83.4,
+          "avg_delay_min": -1.1,
+          "avg_taxi_in_min": 9.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 3334,
+          "on_time_pct": 81.4,
+          "avg_delay_min": 3.1,
+          "avg_taxi_in_min": 11.1
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 573,
+          "on_time_pct": 79.8,
+          "avg_delay_min": 1.1,
+          "avg_taxi_in_min": 10.9
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 1022,
+          "on_time_pct": 77.8,
+          "avg_delay_min": 1.3,
+          "avg_taxi_in_min": 12.8
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 2643,
+          "on_time_pct": 77.7,
+          "avg_delay_min": 9.8,
+          "avg_taxi_in_min": 8.9
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 2184,
+          "on_time_pct": 67.1,
+          "avg_delay_min": 12.8,
+          "avg_taxi_in_min": 9.2
+        }
+      ]
+    },
+    {
+      "code": "DEN",
+      "name": "Denver International",
+      "city": "Denver",
+      "flights": 27290,
+      "on_time_pct": 80.2,
+      "cancelled": 112,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 255,
+          "on_time_pct": 88.6,
+          "avg_delay_min": -5.1,
+          "avg_taxi_in_min": 10.1
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 9391,
+          "on_time_pct": 85.2,
+          "avg_delay_min": -1.4,
+          "avg_taxi_in_min": 10.2
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 6304,
+          "on_time_pct": 82.9,
+          "avg_delay_min": 3.2,
+          "avg_taxi_in_min": 12.4
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 1042,
+          "on_time_pct": 81.7,
+          "avg_delay_min": 0.3,
+          "avg_taxi_in_min": 10.6
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 1967,
+          "on_time_pct": 81.0,
+          "avg_delay_min": 2.0,
+          "avg_taxi_in_min": 14.6
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 789,
+          "on_time_pct": 71.9,
+          "avg_delay_min": 12.6,
+          "avg_taxi_in_min": 9.6
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 7378,
+          "on_time_pct": 71.9,
+          "avg_delay_min": 9.5,
+          "avg_taxi_in_min": 6.5
+        }
+      ]
+    },
+    {
+      "code": "BWI",
+      "name": "Baltimore/Washington International",
+      "city": "Baltimore",
+      "flights": 8135,
+      "on_time_pct": 80.2,
+      "cancelled": 28,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 159,
+          "on_time_pct": 81.8,
+          "avg_delay_min": 0.1,
+          "avg_taxi_in_min": 7.8
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 371,
+          "on_time_pct": 81.1,
+          "avg_delay_min": -1.8,
+          "avg_taxi_in_min": 5.3
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 6313,
+          "on_time_pct": 80.5,
+          "avg_delay_min": 3.7,
+          "avg_taxi_in_min": 4.9
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 295,
+          "on_time_pct": 78.6,
+          "avg_delay_min": 6.8,
+          "avg_taxi_in_min": 6.3
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 484,
+          "on_time_pct": 78.5,
+          "avg_delay_min": 3.9,
+          "avg_taxi_in_min": 8.6
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 338,
+          "on_time_pct": 76.0,
+          "avg_delay_min": 10.4,
+          "avg_taxi_in_min": 11.9
+        }
+      ]
+    },
+    {
+      "code": "PHX",
+      "name": "Phoenix Sky Harbor International",
+      "city": "Phoenix",
+      "flights": 17263,
+      "on_time_pct": 80.0,
+      "cancelled": 72,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 467,
+          "on_time_pct": 88.2,
+          "avg_delay_min": -7.1,
+          "avg_taxi_in_min": 7.1
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 941,
+          "on_time_pct": 85.5,
+          "avg_delay_min": 2.9,
+          "avg_taxi_in_min": 9.6
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 2649,
+          "on_time_pct": 84.3,
+          "avg_delay_min": 6.9,
+          "avg_taxi_in_min": 10.5
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 798,
+          "on_time_pct": 84.0,
+          "avg_delay_min": 0.0,
+          "avg_taxi_in_min": 6.6
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 4796,
+          "on_time_pct": 81.3,
+          "avg_delay_min": 9.0,
+          "avg_taxi_in_min": 7.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 904,
+          "on_time_pct": 80.6,
+          "avg_delay_min": 4.8,
+          "avg_taxi_in_min": 8.0
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 560,
+          "on_time_pct": 76.1,
+          "avg_delay_min": 11.7,
+          "avg_taxi_in_min": 12.3
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 6047,
+          "on_time_pct": 75.4,
+          "avg_delay_min": 6.6,
+          "avg_taxi_in_min": 6.1
+        }
+      ]
+    },
+    {
+      "code": "BOS",
+      "name": "Logan International",
+      "city": "Boston",
+      "flights": 12629,
+      "on_time_pct": 79.6,
+      "cancelled": 73,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 3061,
+          "on_time_pct": 83.4,
+          "avg_delay_min": -2.2,
+          "avg_taxi_in_min": 10.2
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 225,
+          "on_time_pct": 83.1,
+          "avg_delay_min": -4.2,
+          "avg_taxi_in_min": 12.1
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 2373,
+          "on_time_pct": 82.7,
+          "avg_delay_min": 0.6,
+          "avg_taxi_in_min": 9.8
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 100,
+          "on_time_pct": 81.0,
+          "avg_delay_min": -6.4,
+          "avg_taxi_in_min": 11.2
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 155,
+          "on_time_pct": 80.6,
+          "avg_delay_min": 2.4,
+          "avg_taxi_in_min": 7.1
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 1207,
+          "on_time_pct": 80.5,
+          "avg_delay_min": 0.7,
+          "avg_taxi_in_min": 7.1
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 3240,
+          "on_time_pct": 79.2,
+          "avg_delay_min": 4.1,
+          "avg_taxi_in_min": 8.0
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1563,
+          "on_time_pct": 72.9,
+          "avg_delay_min": 10.2,
+          "avg_taxi_in_min": 7.7
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 647,
+          "on_time_pct": 64.0,
+          "avg_delay_min": 15.1,
+          "avg_taxi_in_min": 6.1
+        }
+      ]
+    },
+    {
+      "code": "MIA",
+      "name": "Miami International",
+      "city": "Miami",
+      "flights": 9254,
+      "on_time_pct": 79.4,
+      "cancelled": 45,
+      "airlines": [
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 1202,
+          "on_time_pct": 85.3,
+          "avg_delay_min": 1.7,
+          "avg_taxi_in_min": 6.7
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 560,
+          "on_time_pct": 82.5,
+          "avg_delay_min": -0.3,
+          "avg_taxi_in_min": 9.5
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 5541,
+          "on_time_pct": 79.8,
+          "avg_delay_min": 5.6,
+          "avg_taxi_in_min": 9.7
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 980,
+          "on_time_pct": 78.2,
+          "avg_delay_min": 5.6,
+          "avg_taxi_in_min": 10.1
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 347,
+          "on_time_pct": 70.0,
+          "avg_delay_min": 26.9,
+          "avg_taxi_in_min": 10.0
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 513,
+          "on_time_pct": 64.9,
+          "avg_delay_min": 15.3,
+          "avg_taxi_in_min": 6.6
+        }
+      ]
+    },
+    {
+      "code": "MCO",
+      "name": "Orlando International",
+      "city": "Orlando",
+      "flights": 12890,
+      "on_time_pct": 78.4,
+      "cancelled": 63,
+      "airlines": [
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 1271,
+          "on_time_pct": 85.8,
+          "avg_delay_min": -1.0,
+          "avg_taxi_in_min": 7.8
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 1552,
+          "on_time_pct": 84.1,
+          "avg_delay_min": 0.1,
+          "avg_taxi_in_min": 10.4
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 196,
+          "on_time_pct": 83.2,
+          "avg_delay_min": -9.5,
+          "avg_taxi_in_min": 12.4
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 1617,
+          "on_time_pct": 83.1,
+          "avg_delay_min": 2.7,
+          "avg_taxi_in_min": 12.2
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 1856,
+          "on_time_pct": 77.9,
+          "avg_delay_min": 7.3,
+          "avg_taxi_in_min": 10.7
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 4573,
+          "on_time_pct": 74.6,
+          "avg_delay_min": 9.0,
+          "avg_taxi_in_min": 9.9
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1747,
+          "on_time_pct": 73.5,
+          "avg_delay_min": 9.9,
+          "avg_taxi_in_min": 12.2
+        }
+      ]
+    },
+    {
+      "code": "ORD",
+      "name": "O'Hare International",
+      "city": "Chicago",
+      "flights": 33373,
+      "on_time_pct": 78.3,
+      "cancelled": 364,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 2727,
+          "on_time_pct": 85.8,
+          "avg_delay_min": -2.2,
+          "avg_taxi_in_min": 21.1
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 5374,
+          "on_time_pct": 85.2,
+          "avg_delay_min": -2.0,
+          "avg_taxi_in_min": 20.4
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 304,
+          "on_time_pct": 80.6,
+          "avg_delay_min": 0.8,
+          "avg_taxi_in_min": 20.2
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 9362,
+          "on_time_pct": 78.4,
+          "avg_delay_min": 8.2,
+          "avg_taxi_in_min": 22.2
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 103,
+          "on_time_pct": 77.7,
+          "avg_delay_min": 7.4,
+          "avg_taxi_in_min": 23.2
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 6034,
+          "on_time_pct": 76.5,
+          "avg_delay_min": 9.3,
+          "avg_taxi_in_min": 20.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 976,
+          "on_time_pct": 74.6,
+          "avg_delay_min": 10.0,
+          "avg_taxi_in_min": 18.5
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 7688,
+          "on_time_pct": 74.0,
+          "avg_delay_min": 18.5,
+          "avg_taxi_in_min": 23.6
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 312,
+          "on_time_pct": 71.5,
+          "avg_delay_min": 18.0,
+          "avg_taxi_in_min": 19.6
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 402,
+          "on_time_pct": 57.7,
+          "avg_delay_min": 20.6,
+          "avg_taxi_in_min": 19.2
+        }
+      ]
+    },
+    {
+      "code": "IAH",
+      "name": "George Bush Intercontinental",
+      "city": "Houston",
+      "flights": 10053,
+      "on_time_pct": 76.9,
+      "cancelled": 56,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 108,
+          "on_time_pct": 88.9,
+          "avg_delay_min": -4.8,
+          "avg_taxi_in_min": 11.7
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 6392,
+          "on_time_pct": 80.2,
+          "avg_delay_min": 4.8,
+          "avg_taxi_in_min": 10.4
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 764,
+          "on_time_pct": 73.3,
+          "avg_delay_min": 9.9,
+          "avg_taxi_in_min": 10.3
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 564,
+          "on_time_pct": 72.5,
+          "avg_delay_min": 9.3,
+          "avg_taxi_in_min": 17.0
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 1217,
+          "on_time_pct": 72.1,
+          "avg_delay_min": 19.4,
+          "avg_taxi_in_min": 13.3
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 125,
+          "on_time_pct": 67.2,
+          "avg_delay_min": 9.2,
+          "avg_taxi_in_min": 12.2
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 691,
+          "on_time_pct": 66.4,
+          "avg_delay_min": 22.5,
+          "avg_taxi_in_min": 12.4
+        }
+      ]
+    },
+    {
+      "code": "DFW",
+      "name": "Dallas/Fort Worth International",
+      "city": "Dallas",
+      "flights": 26502,
+      "on_time_pct": 76.8,
+      "cancelled": 927,
+      "airlines": [
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 5542,
+          "on_time_pct": 81.3,
+          "avg_delay_min": 8.4,
+          "avg_taxi_in_min": 12.7
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 265,
+          "on_time_pct": 80.0,
+          "avg_delay_min": -2.7,
+          "avg_taxi_in_min": 14.4
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 1771,
+          "on_time_pct": 79.2,
+          "avg_delay_min": 17.6,
+          "avg_taxi_in_min": 12.6
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 1057,
+          "on_time_pct": 77.3,
+          "avg_delay_min": 9.6,
+          "avg_taxi_in_min": 18.8
+        },
+        {
+          "code": "OH",
+          "name": "PSA Airlines",
+          "flights": 1776,
+          "on_time_pct": 76.5,
+          "avg_delay_min": 17.0,
+          "avg_taxi_in_min": 12.7
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 14169,
+          "on_time_pct": 75.3,
+          "avg_delay_min": 16.0,
+          "avg_taxi_in_min": 13.7
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 966,
+          "on_time_pct": 73.0,
+          "avg_delay_min": 10.7,
+          "avg_taxi_in_min": 12.9
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 897,
+          "on_time_pct": 72.7,
+          "avg_delay_min": 10.8,
+          "avg_taxi_in_min": 12.8
+        }
+      ]
+    },
+    {
+      "code": "LAS",
+      "name": "Harry Reid International",
+      "city": "Las Vegas",
+      "flights": 14497,
+      "on_time_pct": 76.1,
+      "cancelled": 84,
+      "airlines": [
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 213,
+          "on_time_pct": 84.0,
+          "avg_delay_min": 3.4,
+          "avg_taxi_in_min": 8.4
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 638,
+          "on_time_pct": 82.1,
+          "avg_delay_min": 0.6,
+          "avg_taxi_in_min": 9.6
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 381,
+          "on_time_pct": 81.4,
+          "avg_delay_min": 0.1,
+          "avg_taxi_in_min": 9.8
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 1288,
+          "on_time_pct": 79.5,
+          "avg_delay_min": 4.0,
+          "avg_taxi_in_min": 9.1
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 7578,
+          "on_time_pct": 76.0,
+          "avg_delay_min": 6.2,
+          "avg_taxi_in_min": 5.6
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1295,
+          "on_time_pct": 74.2,
+          "avg_delay_min": 12.1,
+          "avg_taxi_in_min": 8.3
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 1365,
+          "on_time_pct": 73.9,
+          "avg_delay_min": 12.0,
+          "avg_taxi_in_min": 8.6
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 1156,
+          "on_time_pct": 73.0,
+          "avg_delay_min": 17.7,
+          "avg_taxi_in_min": 11.1
+        },
+        {
+          "code": "G4",
+          "name": "Allegiant",
+          "flights": 569,
+          "on_time_pct": 72.4,
+          "avg_delay_min": 25.7,
+          "avg_taxi_in_min": 7.1
+        }
+      ]
+    },
+    {
+      "code": "LGA",
+      "name": "LaGuardia",
+      "city": "New York",
+      "flights": 11174,
+      "on_time_pct": 76.1,
+      "cancelled": 201,
+      "airlines": [
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 4846,
+          "on_time_pct": 80.7,
+          "avg_delay_min": 3.1,
+          "avg_taxi_in_min": 9.4
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 2447,
+          "on_time_pct": 78.2,
+          "avg_delay_min": 4.7,
+          "avg_taxi_in_min": 8.3
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 830,
+          "on_time_pct": 74.5,
+          "avg_delay_min": 8.7,
+          "avg_taxi_in_min": 10.2
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 374,
+          "on_time_pct": 71.9,
+          "avg_delay_min": 10.0,
+          "avg_taxi_in_min": 7.8
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1501,
+          "on_time_pct": 70.4,
+          "avg_delay_min": 15.2,
+          "avg_taxi_in_min": 7.1
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 970,
+          "on_time_pct": 63.6,
+          "avg_delay_min": 17.4,
+          "avg_taxi_in_min": 7.9
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 195,
+          "on_time_pct": 56.4,
+          "avg_delay_min": 33.1,
+          "avg_taxi_in_min": 14.6
+        }
+      ]
+    },
+    {
+      "code": "DCA",
+      "name": "Ronald Reagan Washington National",
+      "city": "Washington",
+      "flights": 11989,
+      "on_time_pct": 75.1,
+      "cancelled": 170,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 186,
+          "on_time_pct": 83.9,
+          "avg_delay_min": -9.8,
+          "avg_taxi_in_min": 4.6
+        },
+        {
+          "code": "MQ",
+          "name": "Envoy Air",
+          "flights": 435,
+          "on_time_pct": 80.7,
+          "avg_delay_min": -0.2,
+          "avg_taxi_in_min": 7.2
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 2203,
+          "on_time_pct": 77.8,
+          "avg_delay_min": 10.1,
+          "avg_taxi_in_min": 5.4
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 823,
+          "on_time_pct": 77.4,
+          "avg_delay_min": 5.6,
+          "avg_taxi_in_min": 6.3
+        },
+        {
+          "code": "YX",
+          "name": "Republic",
+          "flights": 2247,
+          "on_time_pct": 77.1,
+          "avg_delay_min": 5.4,
+          "avg_taxi_in_min": 8.7
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 552,
+          "on_time_pct": 75.4,
+          "avg_delay_min": 8.0,
+          "avg_taxi_in_min": 6.5
+        },
+        {
+          "code": "OH",
+          "name": "PSA Airlines",
+          "flights": 3485,
+          "on_time_pct": 74.0,
+          "avg_delay_min": 11.8,
+          "avg_taxi_in_min": 10.6
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 628,
+          "on_time_pct": 73.9,
+          "avg_delay_min": 9.8,
+          "avg_taxi_in_min": 5.6
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 1345,
+          "on_time_pct": 66.1,
+          "avg_delay_min": 14.1,
+          "avg_taxi_in_min": 6.5
+        }
+      ]
+    },
+    {
+      "code": "TPA",
+      "name": "Tampa International",
+      "city": "Tampa",
+      "flights": 6428,
+      "on_time_pct": 75.0,
+      "cancelled": 38,
+      "airlines": [
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 710,
+          "on_time_pct": 83.7,
+          "avg_delay_min": -0.8,
+          "avg_taxi_in_min": 6.7
+        },
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 374,
+          "on_time_pct": 81.3,
+          "avg_delay_min": 1.6,
+          "avg_taxi_in_min": 5.9
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 1234,
+          "on_time_pct": 78.1,
+          "avg_delay_min": 7.4,
+          "avg_taxi_in_min": 6.2
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 536,
+          "on_time_pct": 75.9,
+          "avg_delay_min": 10.7,
+          "avg_taxi_in_min": 8.2
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 2203,
+          "on_time_pct": 71.0,
+          "avg_delay_min": 11.5,
+          "avg_taxi_in_min": 4.8
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1186,
+          "on_time_pct": 70.1,
+          "avg_delay_min": 16.1,
+          "avg_taxi_in_min": 7.6
+        }
+      ]
+    },
+    {
+      "code": "MDW",
+      "name": "Chicago Midway International",
+      "city": "Chicago",
+      "flights": 6236,
+      "on_time_pct": 74.1,
+      "cancelled": 30,
+      "airlines": [
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 117,
+          "on_time_pct": 76.1,
+          "avg_delay_min": 2.6,
+          "avg_taxi_in_min": 6.5
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 5970,
+          "on_time_pct": 74.0,
+          "avg_delay_min": 8.3,
+          "avg_taxi_in_min": 4.2
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 103,
+          "on_time_pct": 68.0,
+          "avg_delay_min": 21.2,
+          "avg_taxi_in_min": 6.7
+        }
+      ]
+    },
+    {
+      "code": "SAN",
+      "name": "San Diego International",
+      "city": "San Diego",
+      "flights": 8892,
+      "on_time_pct": 73.4,
+      "cancelled": 54,
+      "airlines": [
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 144,
+          "on_time_pct": 88.9,
+          "avg_delay_min": -9.3,
+          "avg_taxi_in_min": 4.0
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 1174,
+          "on_time_pct": 82.8,
+          "avg_delay_min": -2.0,
+          "avg_taxi_in_min": 9.1
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 824,
+          "on_time_pct": 81.8,
+          "avg_delay_min": 0.9,
+          "avg_taxi_in_min": 6.8
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 931,
+          "on_time_pct": 81.6,
+          "avg_delay_min": 0.7,
+          "avg_taxi_in_min": 4.8
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 1434,
+          "on_time_pct": 74.1,
+          "avg_delay_min": 8.7,
+          "avg_taxi_in_min": 8.4
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 833,
+          "on_time_pct": 70.9,
+          "avg_delay_min": 12.1,
+          "avg_taxi_in_min": 7.7
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 177,
+          "on_time_pct": 70.1,
+          "avg_delay_min": 24.6,
+          "avg_taxi_in_min": 6.6
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 3375,
+          "on_time_pct": 65.7,
+          "avg_delay_min": 13.2,
+          "avg_taxi_in_min": 5.4
+        }
+      ]
+    },
+    {
+      "code": "AUS",
+      "name": "Austin-Bergstrom International",
+      "city": "Austin",
+      "flights": 7774,
+      "on_time_pct": 73.0,
+      "cancelled": 55,
+      "airlines": [
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 155,
+          "on_time_pct": 84.5,
+          "avg_delay_min": -3.0,
+          "avg_taxi_in_min": 11.3
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 708,
+          "on_time_pct": 81.5,
+          "avg_delay_min": 5.8,
+          "avg_taxi_in_min": 10.4
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 958,
+          "on_time_pct": 76.5,
+          "avg_delay_min": 5.1,
+          "avg_taxi_in_min": 8.2
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 122,
+          "on_time_pct": 76.2,
+          "avg_delay_min": 3.0,
+          "avg_taxi_in_min": 11.1
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 1189,
+          "on_time_pct": 75.5,
+          "avg_delay_min": 6.3,
+          "avg_taxi_in_min": 11.4
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1059,
+          "on_time_pct": 70.3,
+          "avg_delay_min": 16.2,
+          "avg_taxi_in_min": 8.2
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 3373,
+          "on_time_pct": 69.6,
+          "avg_delay_min": 12.8,
+          "avg_taxi_in_min": 6.8
+        }
+      ]
+    },
+    {
+      "code": "SFO",
+      "name": "San Francisco International",
+      "city": "San Francisco",
+      "flights": 13044,
+      "on_time_pct": 53.7,
+      "cancelled": 103,
+      "airlines": [
+        {
+          "code": "B6",
+          "name": "JetBlue",
+          "flights": 388,
+          "on_time_pct": 71.6,
+          "avg_delay_min": 7.8,
+          "avg_taxi_in_min": 11.2
+        },
+        {
+          "code": "UA",
+          "name": "United",
+          "flights": 5631,
+          "on_time_pct": 60.3,
+          "avg_delay_min": 20.8,
+          "avg_taxi_in_min": 8.1
+        },
+        {
+          "code": "AA",
+          "name": "American",
+          "flights": 1074,
+          "on_time_pct": 55.9,
+          "avg_delay_min": 23.7,
+          "avg_taxi_in_min": 11.7
+        },
+        {
+          "code": "DL",
+          "name": "Delta",
+          "flights": 1220,
+          "on_time_pct": 51.4,
+          "avg_delay_min": 23.7,
+          "avg_taxi_in_min": 11.9
+        },
+        {
+          "code": "AS",
+          "name": "Alaska",
+          "flights": 1003,
+          "on_time_pct": 51.0,
+          "avg_delay_min": 24.2,
+          "avg_taxi_in_min": 8.5
+        },
+        {
+          "code": "F9",
+          "name": "Frontier",
+          "flights": 354,
+          "on_time_pct": 48.9,
+          "avg_delay_min": 30.7,
+          "avg_taxi_in_min": 12.8
+        },
+        {
+          "code": "OO",
+          "name": "SkyWest",
+          "flights": 2522,
+          "on_time_pct": 45.6,
+          "avg_delay_min": 33.4,
+          "avg_taxi_in_min": 8.3
+        },
+        {
+          "code": "WN",
+          "name": "Southwest",
+          "flights": 852,
+          "on_time_pct": 32.5,
+          "avg_delay_min": 41.0,
+          "avg_taxi_in_min": 10.9
+        }
+      ]
+    }
+  ]
+}
