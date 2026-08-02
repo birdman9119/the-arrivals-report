@@ -23,6 +23,17 @@ jobs:
         run: |
           python3 pipeline/aggregate.py
           python3 pipeline/build.py
+      - name: Commit new month history
+        run: |
+          git config user.name "arrivals-bot"
+          git config user.email "arrivals-bot@users.noreply.github.com"
+          git add data/history
+          if git diff --cached --quiet; then
+            echo "no history changes"
+          else
+            git commit -m "add latest month data history"
+            git push
+          fi
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

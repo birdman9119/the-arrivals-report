@@ -54,6 +54,7 @@ def main():
     ap.add_argument("--year", type=int)
     ap.add_argument("--month", type=int)
     ap.add_argument("--auto", action="store_true", help="download the most recent available month")
+    ap.add_argument("--backfill", type=int, metavar="N", help="download the last N months")
     args = ap.parse_args()
 
     if args.auto:
@@ -69,6 +70,20 @@ def main():
                 return 0
         print("no data available for last 6 months")
         return 1
+
+    if args.backfill:
+        ok_all = True
+        for lag in range(args.backfill, 0, -1):
+            year, month = month_ago(lag)
+            dest = RAW_DIR / f"{year}_{month}.zip"
+            if dest.exists():
+                print(f"have {dest}")
+                continue
+            print(f"fetching {year}-{month}...")
+            if not fetch(zip_url(year, month), dest):
+                print(f"FAILED {year}-{month}")
+                ok_all = False
+        return 0 if ok_all else 1
 
     if not args.year or not args.month:
         ap.error("pass --year/--month or --auto")

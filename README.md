@@ -1,40 +1,40 @@
 # The Arrivals Report
 
-On-time performance for US airlines, per airport. One table per airport, no filler.
+Which airline is most reliable on your route? Per-route, per-airline on-time performance with 12-month trends, from U.S. DOT data.
 
-Static site generated from U.S. DOT BTS On-Time Performance data. See `output/` for the rendered site.
+Static site in `output/` (built by CI), deployed to GitHub Pages.
 
 ## Pipeline
 
 ```
-pipeline/fetch.py      --year Y --month M   downloads the monthly BTS zip (resume-safe)
-pipeline/aggregate.py                       builds data/site.json (airport × airline stats)
-pipeline/build.py                           renders output/ static site
+pipeline/fetch.py      --year Y --month M   download one month (resume-safe)
+pipeline/fetch.py      --backfill N         download the last N months (one-time)
+pipeline/fetch.py      --auto               download the most recent available month
+pipeline/aggregate.py                       append latest month to data/history/, build data/site.json
+pipeline/build.py                           render output/ static site
 ```
 
-Monthly update:
-
-```
-python3 pipeline/fetch.py --year 2026 --month 6
-python3 pipeline/aggregate.py
-python3 pipeline/build.py
-```
-
-`pipeline/config.py` holds the airport list, current month, and affiliate/domain constants.
+`data/history/YYYY_M.json` holds per-month route stats (committed to git, ~500KB each). CI only needs to download the single newest month — history comes from the repo.
 
 ## Data
 
-Source: [BTS On-Time Performance](https://www.transtats.bts.gov/), monthly release, reporting carriers, US domestic arrivals.
+Source: [BTS On-Time Performance](https://www.transtats.bts.gov/), reporting carriers, US domestic flights between tracked airports (see `pipeline/config.py`).
 
 - On-time: arrived within 15 minutes of schedule (DOT definition); cancelled/diverted excluded.
 - Avg. delay: mean arrival delay, early arrivals counted as zero (DOT "ArrDelayMinutes").
-- Avg. taxi-in: wheels-on to gate, minutes.
+- Trend: 12-month rolling on-time percentage per airline.
+- Morning/evening: scheduled departures before noon vs after 5pm.
 
 ## Design constraints
 
 - No runtime server. Build once, host as static files anywhere.
-- One accent color, tabular numerals, no images, no JS frameworks (one 10-line filter on the index).
-- Affiliate slots are the two links under each airport table (`site/templates/airport.html`); swap the `href="#"` placeholders.
+- One accent color, tabular numerals, no images, no frameworks. Sparklines are hand-rolled inline SVG.
+- Affiliate slots: the two links under each route table (`site/templates/route.html`); swap the `href="#"` placeholders.
+- `BASE_URL` in `pipeline/config.py` for sitemap/robots.
+
+## Monthly update
+
+GitHub Action `.github/workflows/deploy.yml` runs on the 15th: fetch newest month → aggregate → commit history → build → deploy. Manual: "Run workflow" in the Actions tab.
 
 ## Roadmap
 

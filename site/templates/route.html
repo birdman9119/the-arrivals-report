@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ r.label }} — which airline is most reliable? ({{ month }}){% endblock %}
+{% block head %}<meta name="description" content="12-month on-time performance by airline on {{ r.label }}. {{ r.carriers[0].name }} leads at {{ r.carriers[0].on_time_pct }}% on-time. Source: U.S. DOT.">{% endblock %}
+{% block content %}
+<section class="airport-head">
+  <p class="kicker">{{ r.orig }} → {{ r.dest }}</p>
+  <h1>{{ r.label }}</h1>
+  <p class="lede">12-month on-time performance by airline. {{ "{:,}".format(r.flights) }} flights analyzed across {{ month_count }} months. Latest month: {{ month }}. Source: U.S. DOT.</p>
+</section>
+{% if r.tod and r.tod.morning and r.tod.evening %}
+{% set delta = r.tod.morning - r.tod.evening %}
+{% if delta >= 5 or delta <= -5 %}
+<section class="insight">
+  <p>{% if delta >= 5 %}Morning flights beat evening flights on this route by {{ "%0.1f"|format(delta) }} points ({{ r.tod.morning }}% vs {{ r.tod.evening }}% on-time).{% else %}Evening flights beat morning flights on this route by {{ "%0.1f"|format(-delta) }} points ({{ r.tod.evening }}% vs {{ r.tod.morning }}% on-time).{% endif %}</p>
+</section>
+{% endif %}
+{% endif %}
+<section>
+  <table class="airline-table">
+    <thead>
+      <tr>
+        <th>Airline</th>
+        <th class="num">12-mo on-time</th>
+        <th class="num">Trend</th>
+        <th class="num">Avg. delay</th>
+        <th class="num">Flights</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for al in r.carriers %}
+      <tr>
+        <td>{{ al.name }} <span class="muted">({{ al.code }})</span></td>
+        <td class="num {{ al.on_time_pct|cls }}">{{ al.on_time_pct }}%</td>
+        <td class="num">{{ al.trend|sparkline }}</td>
+        <td class="num">{{ al.avg_delay_min }} min</td>
+        <td class="num">{{ "{:,}".format(al.flights) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+<section class="affiliate">
+  <p>Flying {{ r.orig }} → {{ r.dest }}? <a href="#">Luggage tracker</a> · <a href="#">Travel insurance</a></p>
+</section>
+{% endblock %}

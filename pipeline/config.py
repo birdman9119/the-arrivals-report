@@ -43,10 +43,14 @@ BASE_URL = "https://birdman9119.github.io/the-arrivals-report/"
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
+HISTORY_DIR = DATA_DIR / "history"
 SITE_JSON = DATA_DIR / "site.json"
 OUTPUT_DIR = ROOT / "output"
 
-MIN_FLIGHTS = 100
+TRACKED = set(AIRPORT_NAMES)
+MIN_ROUTE_FLIGHTS = 200
+MIN_CARRIER_MONTHLY = 50
+TREND_MONTHS = 12
 
 
 def month_label(year, month):

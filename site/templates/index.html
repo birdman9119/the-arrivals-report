@@ -1,34 +1,38 @@
 {% extends "base.html" %}
-{% block title %}The Arrivals Report — on-time performance by airport{% endblock %}
-{% block head %}<meta name="description" content="On-time performance for U.S. airlines, per airport. Data: DOT Bureau of Transportation Statistics, {{ month }}.">{% endblock %}
+{% block title %}The Arrivals Report — which airline is most reliable on your route?{% endblock %}
+{% block head %}<meta name="description" content="12-month on-time performance by airline for every major U.S. domestic route. Which airline should you book? Source: U.S. DOT.">{% endblock %}
 {% block content %}
 <section class="hero">
-  <h1>How often are flights on time — at each airport, by airline?</h1>
-  <p class="lede">One table per airport. Data for {{ month }}. Source: U.S. DOT Bureau of Transportation Statistics.</p>
-  <input type="search" id="airport-search" placeholder="Search airports… (e.g. LAX, Atlanta, SFO)" autocomplete="off">
+  <h1>Which airline is most reliable on your route?</h1>
+  <p class="lede">{{ route_count }} routes. Up to 12 months of DOT data, by airline.</p>
+  <input type="search" id="route-search" placeholder="Search routes… (e.g. JFK to SFO, New York San Francisco)" autocomplete="off">
+  <div id="results" hidden></div>
 </section>
 <section>
-  <table class="airport-list">
+  <h2 class="section-title">Busiest routes <span class="muted">— latest month: {{ month }}</span></h2>
+  <table class="route-table">
     <thead>
-      <tr>
-        <th>Code</th>
-        <th>Airport</th>
-        <th class="num">On-time</th>
-        <th class="num">Flights</th>
-      </tr>
+      <tr><th>Route</th><th class="num">Best airline</th><th class="num">On-time</th><th class="num">Flights</th></tr>
     </thead>
     <tbody>
-      {% for a in airports %}
-      <tr class="airport-row" data-search="{{ a.code }} {{ a.name }} {{ a.city }}">
-        <td class="code"><a href="{{ a.code|lower }}.html">{{ a.code }}</a></td>
-        <td><a href="{{ a.code|lower }}.html">{{ a.city }} — {{ a.name }}</a></td>
-        <td class="num {{ 'good' if a.on_time_pct >= 80 else 'mid' if a.on_time_pct >= 70 else 'bad' }}">{{ a.on_time_pct }}%</td>
-        <td class="num">{{ "{:,}".format(a.flights) }}</td>
+      {% for r in popular %}
+      <tr class="route-row">
+        <td><a href="{{ r.orig|lower }}-{{ r.dest|lower }}.html">{{ r.orig }} → {{ r.dest }} <span class="muted">— {{ r.label }}</span></a></td>
+        <td class="num">{{ r.carriers[0].name }}</td>
+        <td class="num {{ r.carriers[0].on_time_pct|cls }}">{{ r.carriers[0].on_time_pct }}%</td>
+        <td class="num">{{ "{:,}".format(r.flights) }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <p class="empty" id="no-results" hidden>No airports match.</p>
 </section>
-<script src="/static/app.js"></script>
+<section class="airport-links">
+  <h2 class="section-title">Or browse by airport</h2>
+  <p>
+    {% for code in airports|sort %}
+    <a href="{{ code|lower }}.html">{{ code }}</a>{% if not loop.last %} · {% endif %}
+    {% endfor %}
+  </p>
+</section>
+<script src="static/app.js"></script>
 {% endblock %}
