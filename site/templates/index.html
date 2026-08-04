@@ -36,7 +36,6 @@
 <section class="map-section">
   <h2 class="section-title">The U.S. flight network <span class="muted">— hover a route for its story</span></h2>
   <div class="map-wrap" id="map-wrap">
-    {% include "us.svg" %}
     <div class="map-tip" id="map-tip" hidden></div>
   </div>
   <p class="map-legend">Every line is a route between two tracked airports. Your route lights up as you type it above.</p>
@@ -67,5 +66,8 @@
     {% endfor %}
   </p>
 </section>
+<script src="static/vendor/d3-array.min.js"></script>
+<script src="static/vendor/d3-geo.min.js"></script>
+<script src="static/vendor/topojson-client.min.js"></script>
 <script src="static/app.js"></script>
 {% endblock %}

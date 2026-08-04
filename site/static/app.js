@@ -70,26 +70,13 @@ function routePage(from, to, date) {
 const MAP = (function () {
   const wrap = document.getElementById("map-wrap");
   if (!wrap) return null;
-  const svg = wrap.querySelector("svg");
   const tip = document.getElementById("map-tip");
 
-  const LON_MIN = -125, LON_MAX = -66.5, LAT_MAX = 49.5;
-  const R = Math.cos((37 * Math.PI) / 180);
-  const K = 1000 / ((LON_MAX - LON_MIN) * R);
-  const INSET = [70, 485];
-  const proj = (lat, lon) => [(lon - LON_MIN) * R * K, (LAT_MAX - lat) * K];
+  const projection = d3.geoAlbersUsa().scale(1300).translate([487.5, 305]);
+  const arcPath = d3.geoPath(projection);
+  const TOP_ROUTES = 30;
 
   let ports = {}, routeLines = {}, hotLine = null;
-
-  function linePath(a, b) {
-    const dx = b[0] - a[0], dy = b[1] - a[1];
-    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
-    const len = Math.hypot(dx, dy);
-    const nx = -dy / (len || 1), ny = dx / (len || 1);
-    const bow = Math.min(len * 0.18, 70);
-    const cx = mx + nx * bow, cy = my + ny * bow;
-    return `M${a[0].toFixed(1)},${a[1].toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${b[0].toFixed(1)},${b[1].toFixed(1)}`;
-  }
 
   function tipShow(html, x, y) {
     tip.innerHTML = html;
@@ -105,14 +92,35 @@ const MAP = (function () {
   }
   function tipHide() { tip.hidden = true; }
 
-  function portXY(code) {
-    const p = ports[code];
-    if (!p) return null;
-    return p.lon < LON_MIN ? INSET : proj(p.lat, p.lon);
+  function routeTooltip(r) {
+    return (
+      `<strong>${r.orig} → ${r.dest}</strong> ${r.label}<br>` +
+      `<b>${r.pct}%</b> on-time year to date (${r.ytd_label})${r.cancel_rate ? ` · ${r.cancel_rate}% cancelled` : ""}<br>` +
+      `Best: ${r.best} (${r.best_pct}%) · ${r.flights.toLocaleString()} flights`
+    );
   }
 
-  function render(airports, routes) {
+  function render(atlas, airports, routes) {
     airports.forEach((a) => { ports[a.code] = a; });
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 975 610");
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", "Map of U.S. airports and flight routes");
+
+    const statesG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    statesG.setAttribute("class", "states");
+    const statePath = d3.geoPath();
+    topojson.feature(atlas, atlas.objects.states).features.forEach((f) => {
+      const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      p.setAttribute("d", statePath(f));
+      statesG.appendChild(p);
+    });
+    svg.appendChild(statesG);
+
+    const topKeys = new Set(
+      routes.slice().sort((a, b) => b.flights - a.flights).slice(0, TOP_ROUTES).map((r) => `${r.orig}_${r.dest}`)
+    );
 
     const routesG = document.createElementNS("http://www.w3.org/2000/svg", "g");
     routesG.setAttribute("class", "map-routes");
@@ -120,18 +128,11 @@ const MAP = (function () {
       const a = ports[r.orig], b = ports[r.dest];
       if (!a || !b) return;
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("d", linePath(portXY(r.orig), portXY(r.dest)));
-      path.setAttribute("class", "route-line");
+      path.setAttribute("d", arcPath({ type: "LineString", coordinates: [[a.lon, a.lat], [b.lon, b.lat]] }));
+      path.setAttribute("class", "route-line" + (topKeys.has(`${r.orig}_${r.dest}`) ? " top" : ""));
       path.setAttribute("data-orig", r.orig);
       path.setAttribute("data-dest", r.dest);
-      path.addEventListener("mousemove", (e) => {
-        tipShow(
-          `<strong>${r.orig} → ${r.dest}</strong> ${r.label}<br>` +
-          `<b>${r.pct}%</b> on-time year to date (${r.ytd_label})${r.cancel_rate ? ` · ${r.cancel_rate}% cancelled` : ""}<br>` +
-          `Best: ${r.best} (${r.best_pct}%) · ${r.flights.toLocaleString()} flights`,
-          e.clientX, e.clientY
-        );
-      });
+      path.addEventListener("mousemove", (e) => tipShow(routeTooltip(r), e.clientX, e.clientY));
       path.addEventListener("mouseleave", tipHide);
       path.addEventListener("click", () => routePage(r.orig, r.dest, ""));
       routesG.appendChild(path);
@@ -142,7 +143,7 @@ const MAP = (function () {
     const portsG = document.createElementNS("http://www.w3.org/2000/svg", "g");
     portsG.setAttribute("class", "map-ports");
     Object.values(ports).forEach((a) => {
-      const xy = portXY(a.code);
+      const xy = projection([a.lon, a.lat]);
       if (!xy) return;
       const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       c.setAttribute("cx", xy[0]);
@@ -150,15 +151,23 @@ const MAP = (function () {
       c.setAttribute("r", 4);
       c.setAttribute("class", "port-dot");
       c.setAttribute("data-code", a.code);
-      const nRoutes = routes.filter((r) => r.orig === a.code || r.dest === a.code).length;
+      const mine = routes.filter((r) => r.orig === a.code || r.dest === a.code);
       c.addEventListener("mousemove", (e) => {
-        tipShow(`<strong>${a.code}</strong> ${a.city}<br>${nRoutes} routes from here`, e.clientX, e.clientY);
+        tipShow(`<strong>${a.code}</strong> ${a.city}<br>${mine.length} routes from here`, e.clientX, e.clientY);
       });
-      c.addEventListener("mouseleave", tipHide);
+      c.addEventListener("mouseleave", () => {
+        tipHide();
+        mine.forEach((r) => routeLines[`${r.orig}_${r.dest}`].classList.remove("reveal"));
+      });
+      c.addEventListener("mouseenter", () => {
+        mine.forEach((r) => routeLines[`${r.orig}_${r.dest}`].classList.add("reveal"));
+      });
       c.addEventListener("click", () => (location.href = a.code.toLowerCase() + ".html"));
       portsG.appendChild(c);
     });
     svg.appendChild(portsG);
+
+    wrap.insertBefore(svg, tip);
   }
 
   function highlight(from, to) {
@@ -183,10 +192,11 @@ const MAP = (function () {
 
 if (MAP) {
   Promise.all([
+    fetch("static/us-atlas.json").then((r) => r.json()),
     fetch("airports.json").then((r) => r.json()),
     fetch("routes.json").then((r) => r.json()),
-  ]).then(([airports, routes]) => {
-    MAP.render(airports, routes);
+  ]).then(([atlas, airports, routes]) => {
+    MAP.render(atlas, airports, routes);
   });
 }
 

@@ -31,7 +31,7 @@ Source: [BTS On-Time Performance](https://www.transtats.bts.gov/), reporting car
 ## Design constraints
 
 - No runtime server. Build once, host as static files anywhere.
-- One accent color, tabular numerals, no images, no frameworks. Sparklines are hand-rolled inline SVG.
+- One accent color, tabular numerals, no images. Sparklines are hand-rolled inline SVG; the homepage network map uses vendored d3-geo/topojson-client over the Census `us-atlas` (states-albers-10m, public domain) — all static, no tile servers.
 - Affiliate slots: the two links under each route table (`site/templates/route.html`); swap the `href="#"` placeholders.
 - `BASE_URL` in `pipeline/config.py` for sitemap/robots.
 
