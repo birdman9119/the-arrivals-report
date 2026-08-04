@@ -89,10 +89,35 @@ const MAP = (function () {
   const tip = document.getElementById("map-tip");
 
   const projection = d3.geoAlbersUsa().scale(1300).translate([487.5, 305]);
-  const arcPath = d3.geoPath(projection);
   const TOP_ROUTES = 30;
 
   let ports = {}, routeLines = {}, hotLine = null;
+
+  function distMiles(a, b) {
+    const R = 3958.8;
+    const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+    const dLon = ((b.lon - a.lon) * Math.PI) / 180;
+    const s = Math.sin(dLat / 2) ** 2 +
+      Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(s));
+  }
+
+  function linePath(a, b, bow) {
+    const dx = b[0] - a[0], dy = b[1] - a[1];
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+    const len = Math.hypot(dx, dy) || 1;
+    const nx = -dy / len, ny = dx / len;
+    const cx = mx + nx * bow, cy = my + ny * bow;
+    return `M${a[0].toFixed(1)},${a[1].toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${b[0].toFixed(1)},${b[1].toFixed(1)}`;
+  }
+
+  function routeTooltip(r, miles) {
+    return (
+      `<strong>${r.orig} → ${r.dest}</strong> ${r.label}<br>` +
+      `<b>${r.pct}%</b> on-time year to date (${r.ytd_label})${r.cancel_rate ? ` · ${r.cancel_rate}% cancelled` : ""}<br>` +
+      `Best: ${r.best} (${r.best_pct}%) · ${r.flights.toLocaleString()} flights · ~${Math.round(miles).toLocaleString()} mi`
+    );
+  }
 
   function tipShow(html, x, y) {
     tip.innerHTML = html;
@@ -107,14 +132,6 @@ const MAP = (function () {
     tip.style.top = ty + "px";
   }
   function tipHide() { tip.hidden = true; }
-
-  function routeTooltip(r) {
-    return (
-      `<strong>${r.orig} → ${r.dest}</strong> ${r.label}<br>` +
-      `<b>${r.pct}%</b> on-time year to date (${r.ytd_label})${r.cancel_rate ? ` · ${r.cancel_rate}% cancelled` : ""}<br>` +
-      `Best: ${r.best} (${r.best_pct}%) · ${r.flights.toLocaleString()} flights`
-    );
-  }
 
   function render(atlas, airports, routes) {
     airports.forEach((a) => { ports[a.code] = a; });
@@ -138,22 +155,51 @@ const MAP = (function () {
       routes.slice().sort((a, b) => b.flights - a.flights).slice(0, TOP_ROUTES).map((r) => `${r.orig}_${r.dest}`)
     );
 
+    const maxFlights = Math.max(...routes.map((r) => r.flights));
+    const lineWidth = (f) => (f >= maxFlights * 0.1 ? 1.2 + Math.pow(f / maxFlights, 0.4) * 4 : 1.2);
+
     const routesG = document.createElementNS("http://www.w3.org/2000/svg", "g");
     routesG.setAttribute("class", "map-routes");
+    const halosG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    halosG.setAttribute("class", "map-halos");
     routes.forEach((r) => {
       const a = ports[r.orig], b = ports[r.dest];
       if (!a || !b) return;
+      const miles = distMiles(a, b);
+      const xyA = projection([a.lon, a.lat]);
+      const xyB = projection([b.lon, b.lat]);
+      if (!xyA || !xyB) return;
+      const bow = Math.min(5 + miles * 0.028, 110);
+      const d = linePath(xyA, xyB, bow);
+      const isTop = topKeys.has(`${r.orig}_${r.dest}`);
+      const tooltip = () => routeTooltip(r, miles);
+      const wire = (el, onEnter, onLeave) => {
+        el.addEventListener("mousemove", (e) => tipShow(tooltip(), e.clientX, e.clientY));
+        el.addEventListener("mouseleave", onLeave);
+        el.addEventListener("click", () => routePage(r.orig, r.dest, ""));
+        if (onEnter) el.addEventListener("mouseenter", onEnter);
+      };
+
+      const halo = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      halo.setAttribute("d", d);
+      halo.setAttribute("class", "route-hit");
+      wire(halo);
+      halosG.appendChild(halo);
+
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("d", arcPath({ type: "LineString", coordinates: [[a.lon, a.lat], [b.lon, b.lat]] }));
-      path.setAttribute("class", "route-line" + (topKeys.has(`${r.orig}_${r.dest}`) ? " top" : ""));
+      path.setAttribute("d", d);
+      path.setAttribute("class", "route-line" + (isTop ? " top" : ""));
+      if (isTop) path.setAttribute("stroke-width", lineWidth(r.flights));
       path.setAttribute("data-orig", r.orig);
       path.setAttribute("data-dest", r.dest);
-      path.addEventListener("mousemove", (e) => tipShow(routeTooltip(r), e.clientX, e.clientY));
-      path.addEventListener("mouseleave", tipHide);
-      path.addEventListener("click", () => routePage(r.orig, r.dest, ""));
+      wire(path, () => {
+        path.classList.add("reveal");
+        routesG.appendChild(path);
+      }, () => path.classList.remove("reveal"));
       routesG.appendChild(path);
       routeLines[`${r.orig}_${r.dest}`] = path;
     });
+    svg.appendChild(halosG);
     svg.appendChild(routesG);
 
     const portsG = document.createElementNS("http://www.w3.org/2000/svg", "g");

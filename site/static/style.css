@@ -192,11 +192,12 @@ td a:hover { text-decoration: underline; }
 .map-wrap { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
 .map-wrap svg { display: block; width: 100%; height: auto; }
 .states path { fill: #f2f2f2; stroke: #dcdcdc; stroke-width: 0.6; }
-.route-line { fill: none; stroke: #b5b5b5; stroke-width: 1; opacity: 0.07; cursor: pointer; transition: opacity 0.18s, stroke 0.15s, stroke-width 0.15s; }
+.route-line { fill: none; stroke: #b5b5b5; stroke-width: 1; opacity: 0.07; cursor: pointer; transition: opacity 0.18s, stroke 0.15s; }
 .route-line.top { opacity: 0.45; }
-.route-line.reveal { opacity: 0.85; stroke: var(--fg); stroke-width: 1.2; }
-.route-line:hover { opacity: 1; stroke: var(--fg); stroke-width: 1.8; }
-.route-line.hot { stroke: var(--good); opacity: 1; stroke-width: 2.4; }
+.route-line.reveal { opacity: 0.9; stroke: var(--fg); stroke-width: 2.2; }
+.route-line:hover { opacity: 1; stroke: var(--fg); stroke-width: 2.6; }
+.route-line.hot { stroke: var(--good); opacity: 1; stroke-width: 3; }
+.route-hit { fill: none; stroke: transparent; stroke-width: 10; pointer-events: stroke; cursor: pointer; }
 .port-dot { fill: var(--fg); stroke: #fff; stroke-width: 1.5; cursor: pointer; transition: r 0.1s; }
 .port-dot:hover { r: 5.5; }
 .map-tip {
