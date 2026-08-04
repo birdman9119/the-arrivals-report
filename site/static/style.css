@@ -87,6 +87,12 @@ main.wrap { padding-top: 48px; padding-bottom: 80px; }
 .suggest-item:first-child { border-top: none; }
 .suggest-item:hover, .suggest-item:focus { background: #f5f5f5; outline: none; }
 .suggest-empty { padding: 10px 12px; font-size: 14px; color: var(--muted); }
+.suggest-head {
+  position: sticky; top: 0; z-index: 1;
+  background: #fff; padding: 8px 14px; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
 
 .decision { margin-top: 28px; background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--fg); border-radius: 8px; padding: 18px 20px; max-width: 640px; }
 .decision-line { font-size: 16px; }

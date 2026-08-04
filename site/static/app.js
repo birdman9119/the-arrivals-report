@@ -17,7 +17,7 @@ function setupCombo(inputId, hiddenId, suggestId) {
     const terms = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
     let hits;
     if (!terms.length) {
-      hits = airports.slice().sort((a, b) => b.flights - a.flights).slice(0, 12);
+      hits = airports.slice().sort((a, b) => b.flights - a.flights);
     } else {
       const scored = [];
       airports.forEach((a) => {
@@ -35,9 +35,11 @@ function setupCombo(inputId, hiddenId, suggestId) {
       hits = scored.slice(0, 12).map((x) => x[0]);
     }
     if (!hits.length) { suggest.innerHTML = "<p class=\"suggest-empty\">No airports match.</p>"; suggest.hidden = false; return; }
-    suggest.innerHTML = hits.map((a, i) =>
-      `<button type="button" class="suggest-item" data-index="${i}" data-code="${a.code}" data-label="${a.code} — ${a.city}">${a.code} — ${a.city} <span class="muted">${a.name}</span></button>`
-    ).join("");
+    suggest.innerHTML =
+      `<p class="suggest-head">${airports.length} airports — keep typing to filter</p>` +
+      hits.map((a, i) =>
+        `<button type="button" class="suggest-item" data-index="${i}" data-code="${a.code}" data-label="${a.code} — ${a.city}">${a.code} — ${a.city} <span class="muted">${a.name}</span></button>`
+      ).join("");
     suggest.hidden = false;
   }
 
