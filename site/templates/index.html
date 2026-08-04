@@ -28,23 +28,23 @@
       </label>
       <button type="submit" class="cta">See airline stats</button>
     </div>
-    <p class="wizard-note">Travel date is optional — we'll show how that month historically performs on your route.</p>
+    <p class="wizard-note">Travel date is optional — we'll show how that month <span class="def" data-def="monthavg">historically performs</span> on your route.</p>
     <p class="wizard-msg" id="wizard-msg" hidden></p>
   </form>
-  <p class="lede stats-line">{{ route_count }} routes · {{ airports|length }} airports · {{ month_count }} months of DOT data</p>
+  <p class="lede stats-line">{{ route_count }} <span class="def" data-def="routescount">routes</span> · {{ airports|length }} <span class="def" data-def="airportcount">airports</span> · {{ month_count }} <span class="def" data-def="months">months of DOT data</span></p>
 </section>
 <section class="map-section">
   <h2 class="section-title">The U.S. flight network <span class="muted">— hover a route for its story</span></h2>
   <div class="map-wrap" id="map-wrap">
     <div class="map-tip" id="map-tip" hidden></div>
   </div>
-  <p class="map-legend">Thicker lines = more flights · More curve = farther. Your route lights up as you type it above — hover or tap a line for its stats.</p>
+  <p class="map-legend"><span class="def" data-def="density">Thicker lines = more flights</span> · <span class="def" data-def="curve">More curve = farther</span>. Your route lights up as you type it above — hover or tap a line for its stats.</p>
 </section>
 <section>
-  <h2 class="section-title">Most-flown routes <span class="muted">— year to date ({{ ytd_label }})</span></h2>
+  <h2 class="section-title"><span class="def" data-def="mostflown">Most-flown routes</span> <span class="muted">— <span class="def" data-def="ytd">year to date</span> ({{ ytd_label }})</span></h2>
   <table class="route-table">
     <thead>
-      <tr><th>Route</th><th class="num">Best airline</th><th class="num">On-time</th><th class="num">Flights</th></tr>
+      <tr><th><span class="def" data-def="route">Route</span></th><th class="num"><span class="def" data-def="best">Best airline</span></th><th class="num"><span class="def" data-def="ontime">On-time</span></th><th class="num"><span class="def" data-def="flights">Flights</span></th></tr>
     </thead>
     <tbody>
       {% for r in popular %}

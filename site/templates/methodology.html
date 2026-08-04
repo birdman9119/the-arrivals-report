@@ -7,13 +7,13 @@
 </section>
 <section class="prose">
   <h2>Source</h2>
-  <p>All data is the U.S. Department of Transportation's Bureau of Transportation Statistics <a href="https://www.transtats.bts.gov/">On-Time Performance database</a>, which covers scheduled passenger flights by U.S. reporting carriers on domestic routes. Each page shows a rolling window of the most recent months available — currently {{ month_count }} months, the latest being {{ month }}.</p>
+  <p>All data is the U.S. Department of Transportation's Bureau of Transportation Statistics <a href="https://www.transtats.bts.gov/"><span class="def" data-def="dotdata">On-Time Performance database</span></a>, which covers scheduled passenger flights by U.S. reporting carriers on domestic routes. Each page shows a rolling window of the most recent months available — currently {{ month_count }} months, the latest being {{ month }}.</p>
   <h2>Definitions</h2>
-  <p><strong>On-time</strong> means the flight arrived within 15 minutes of its scheduled arrival time — the DOT's standard definition. Cancelled and diverted flights are counted separately, not as on-time.</p>
-  <p><strong>Year to date</strong> is the headline number on every route: the running total of all flights from January through the latest available month, weighted by flight volume. The smaller "Rolling window" line shows the most recent {{ month_count }} months of history.</p>
-  <p><strong>Avg. delay</strong> is the mean arrival delay in minutes across all flights by that airline on that route (early arrivals count as zero, matching the DOT's "ArrDelayMinutes" measure).</p>
-  <p><strong>Trend</strong> is the airline's on-time percentage for each of the last {{ month_count }} months.</p>
-  <p><strong>Morning vs. evening</strong> compares scheduled departures before noon with departures after 5pm on the same route.</p>
+  <p><strong><span class="def" data-def="ontime">On-time</span></strong> means the flight arrived within 15 minutes of its scheduled arrival time — the DOT's standard definition. Cancelled and diverted flights are counted separately, not as on-time.</p>
+  <p><strong><span class="def" data-def="ytd">Year to date</span></strong> is the headline number on every route: the running total of all flights from January through the latest available month, weighted by flight volume. The smaller "<span class="def" data-def="window">Rolling window</span>" line shows the most recent {{ month_count }} months of history.</p>
+  <p><strong><span class="def" data-def="avgdelay">Avg. delay</span></strong> is the mean arrival delay in minutes across all flights by that airline on that route (early arrivals count as zero, matching the DOT's "ArrDelayMinutes" measure).</p>
+  <p><strong><span class="def" data-def="trend">Trend</span></strong> is the airline's on-time percentage for each of the last {{ month_count }} months.</p>
+  <p><strong><span class="def" data-def="morning">Morning</span> vs. <span class="def" data-def="evening">evening</span></strong> compares scheduled departures before noon with departures after 5pm on the same route.</p>
   <h2>What this is not</h2>
   <p>There is no public data on baggage claim wait times by airline — no airport or agency publishes it. This site intentionally doesn't pretend otherwise.</p>
   <h2>Update schedule</h2>

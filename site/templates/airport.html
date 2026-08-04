@@ -7,17 +7,17 @@
 <section class="airport-head">
   <p class="kicker">{{ code }}</p>
   <h1>{{ a.city }}<br><span class="muted">{{ a.name }}</span></h1>
-  <p class="lede">Most reliable airline for each major route, year to date ({{ ytd_label }}). Latest month: {{ month }}. Source: U.S. DOT.</p>
+  <p class="lede">Most reliable airline for each major route, <span class="def" data-def="ytd">year to date</span> ({{ ytd_label }}). Latest month: {{ month }}. Source: <span class="def" data-def="dotdata">U.S. DOT</span>.</p>
 </section>
 {% if not outbound and not inbound %}
 <p class="empty">No qualifying routes through {{ code }} yet — routes need at least 200 flights per month to appear here.</p>
 {% endif %}
 {% if outbound %}
 <section>
-  <h2 class="section-title">From {{ code }} <span class="muted">— best airline per route</span></h2>
+  <h2 class="section-title">From {{ code }} <span class="muted">— <span class="def" data-def="best">best airline per route</span></span></h2>
   <table class="route-table">
     <thead>
-      <tr><th>Route</th><th class="num">Best</th><th class="num">On-time</th><th class="num">Flights</th></tr>
+      <tr><th><span class="def" data-def="route">Route</span></th><th class="num"><span class="def" data-def="best">Best</span></th><th class="num"><span class="def" data-def="ontime">On-time</span></th><th class="num"><span class="def" data-def="flights">Flights</span></th></tr>
     </thead>
     <tbody>
       {% for r in outbound|sort(attribute='flights', reverse=True) %}
@@ -34,10 +34,10 @@
 {% endif %}
 {% if inbound %}
 <section>
-  <h2 class="section-title">Into {{ code }} <span class="muted">— best airline per route</span></h2>
+  <h2 class="section-title">Into {{ code }} <span class="muted">— <span class="def" data-def="best">best airline per route</span></span></h2>
   <table class="route-table">
     <thead>
-      <tr><th>Route</th><th class="num">Best</th><th class="num">On-time</th><th class="num">Flights</th></tr>
+      <tr><th><span class="def" data-def="route">Route</span></th><th class="num"><span class="def" data-def="best">Best</span></th><th class="num"><span class="def" data-def="ontime">On-time</span></th><th class="num"><span class="def" data-def="flights">Flights</span></th></tr>
     </thead>
     <tbody>
       {% for r in inbound|sort(attribute='flights', reverse=True) %}

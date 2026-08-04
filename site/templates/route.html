@@ -12,16 +12,16 @@
 
 <section class="decision" id="decision">
   <p class="decision-line">
-    <span id="trip-line">Year to date ({{ r.ytd_label }}):</span>
-    <strong>{{ r.on_time_pct }}%</strong> of flights on this route arrived on time —
-    {{ "{:,}".format(r.flights) }} flights{% if r.cancel_rate %} ({{ r.cancel_rate }}% cancelled){% endif %}.
-    <span class="benchmark">Rolling window: {{ r.window_pct }}% over {{ month_count }} months · National average across all routes here: {{ national }}%.</span>
+    <span id="trip-line"><span class="def" data-def="ytd">Year to date</span> ({{ r.ytd_label }}):</span>
+    <strong>{{ r.on_time_pct }}%</strong> of flights on this route arrived <span class="def" data-def="ontime">on time</span> —
+    {{ "{:,}".format(r.flights) }} <span class="def" data-def="flights">flights</span>{% if r.cancel_rate %} ({{ r.cancel_rate }}% <span class="def" data-def="cancelrate">cancelled</span>){% endif %}.
+    <span class="benchmark"><span class="def" data-def="window">Rolling window</span>: {{ r.window_pct }}% over {{ month_count }} months · <span class="def" data-def="national">National average</span> across all routes here: {{ national }}%.</span>
   </p>
   <p class="decision-pick" id="decision-pick">
-    Best pick: <strong>{% if '(' in r.carriers[0].name %}{{ r.carriers[0].name }}{% else %}{{ r.carriers[0].name }} ({{ r.carriers[0].code }}){% endif %}</strong>
+    <span class="def" data-def="bestpick">Best pick</span>: <strong>{% if '(' in r.carriers[0].name %}{{ r.carriers[0].name }}{% else %}{{ r.carriers[0].name }} ({{ r.carriers[0].code }}){% endif %}</strong>
     at {{ r.carriers[0].on_time_pct }}% year to date.
     {% if r.carriers|length > 1 and r.carriers[1].on_time_pct is not none and r.carriers[1].on_time_pct >= r.carriers[0].on_time_pct - 2 %}
-    Close race — {{ r.carriers[1].name }} is within 2 points.
+    <span class="def" data-def="closepick">Close race</span> — {{ r.carriers[1].name }} is within 2 points.
     {% endif %}
   </p>
   {% if r.carriers|length >= 3 %}
@@ -29,7 +29,7 @@
   {% set worst = r.carriers[-1] %}
   {% set gap = r.carriers[0].on_time_pct - worst.on_time_pct %}
   {% if gap >= 5 %}
-  <p class="decision-avoid">Rough option: {{ worst.name }} is {{ "%0.1f"|format(gap) }} points behind the leader ({{ worst.on_time_pct }}%).</p>
+  <p class="decision-avoid"><span class="def" data-def="roughoption">Rough option</span>: {{ worst.name }} is {{ "%0.1f"|format(gap) }} points behind the leader ({{ worst.on_time_pct }}%).</p>
   {% endif %}
   {% endif %}
   {% endif %}
@@ -40,21 +40,21 @@
 {% set delta = r.tod.morning - r.tod.evening %}
 {% if delta >= 5 or delta <= -5 %}
 <section class="insight">
-  <p>{% if delta >= 5 %}Morning flights beat evening flights on this route by {{ "%0.1f"|format(delta) }} points ({{ r.tod.morning }}% vs {{ r.tod.evening }}% on-time).{% else %}Evening flights beat morning flights on this route by {{ "%0.1f"|format(-delta) }} points ({{ r.tod.evening }}% vs {{ r.tod.morning }}% on-time).{% endif %}</p>
+  <p>{% if delta >= 5 %}<span class="def" data-def="morning">Morning flights</span> beat <span class="def" data-def="evening">evening flights</span> on this route by {{ "%0.1f"|format(delta) }} points ({{ r.tod.morning }}% vs {{ r.tod.evening }}% on-time).{% else %}<span class="def" data-def="evening">Evening flights</span> beat <span class="def" data-def="morning">morning flights</span> on this route by {{ "%0.1f"|format(-delta) }} points ({{ r.tod.evening }}% vs {{ r.tod.morning }}% on-time).{% endif %}</p>
 </section>
 {% endif %}
 {% endif %}
 
 <section>
-  <p class="table-note">Year to date ({{ r.ytd_label }}), per airline. Trend shows each month's on-time %.</p>
+  <p class="table-note"><span class="def" data-def="ytd">Year to date</span> ({{ r.ytd_label }}), per airline. <span class="def" data-def="trend">Trend</span> shows each month's on-time %.</p>
   <table class="airline-table">
     <thead>
       <tr>
         <th>Airline</th>
-        <th class="num">On-time</th>
-        <th class="num">Trend</th>
-        <th class="num">Avg. delay</th>
-        <th class="num">Flights</th>
+        <th class="num"><span class="def" data-def="ontime">On-time</span></th>
+        <th class="num"><span class="def" data-def="trend">Trend</span></th>
+        <th class="num"><span class="def" data-def="avgdelay">Avg. delay</span></th>
+        <th class="num"><span class="def" data-def="flights">Flights</span></th>
       </tr>
     </thead>
     <tbody>
@@ -73,7 +73,7 @@
   </table>
   {% set small = r.carriers | selectattr('window_flights', 'lt', 200) | list %}
   {% if small %}
-  <p class="footnote">Small sample: {{ small | map(attribute='name') | join(', ') }} — fewer than 200 flights in this window, treat the numbers as noisy.</p>
+  <p class="footnote"><span class="def" data-def="smallsample">Small sample</span>: {{ small | map(attribute='name') | join(', ') }} — fewer than 200 flights in this window, treat the numbers as noisy.</p>
   {% endif %}
 </section>
 <section class="affiliate">
