@@ -75,12 +75,13 @@ main.wrap { padding-top: 48px; padding-bottom: 80px; }
 .table-note { margin-bottom: 10px; font-size: 13px; color: var(--muted); }
 .suggest {
   position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; z-index: 20;
-  background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow-y: auto;
+  max-height: 264px; -webkit-overflow-scrolling: touch;
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 .suggest-item {
   display: block; width: 100%; text-align: left; background: none; border: none;
-  padding: 10px 12px; font-size: 14px; cursor: pointer; color: var(--fg);
+  padding: 12px 14px; font-size: 15px; cursor: pointer; color: var(--fg);
   border-top: 1px solid var(--line);
 }
 .suggest-item:first-child { border-top: none; }

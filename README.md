@@ -42,5 +42,5 @@ GitHub Action `.github/workflows/deploy.yml` runs on the 15th: fetch newest mont
 ## Roadmap
 
 - Airline baggage-loss rate column (DOT ATCR, national per-airline) — needs PDF parsing, not yet automated.
-- More airports (config-only change).
 - Historical month archive pages.
+- Even more airports (config-only change; 80 tracked today).

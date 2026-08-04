@@ -161,6 +161,11 @@ def build():
         )
     )
 
+    airport_flights = {}
+    for key, r in routes.items():
+        airport_flights[r["orig"]] = airport_flights.get(r["orig"], 0) + r["flights"]
+        airport_flights[r["dest"]] = airport_flights.get(r["dest"], 0) + r["flights"]
+
     airport_list = [
         {
             "code": c,
@@ -169,6 +174,7 @@ def build():
             "label": f"{c} — {info['city']} ({info['name']})",
             "lat": COORDS.get(c, (0, 0))[0],
             "lon": COORDS.get(c, (0, 0))[1],
+            "flights": airport_flights.get(c, 0),
         }
         for c, info in sorted(airports.items())
     ]

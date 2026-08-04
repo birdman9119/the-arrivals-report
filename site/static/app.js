@@ -15,9 +15,25 @@ function setupCombo(inputId, hiddenId, suggestId) {
 
   function render(q) {
     const terms = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    const hits = terms.length
-      ? airports.filter((a) => terms.every((t) => (a.code + " " + a.city + " " + a.name).toLowerCase().includes(t))).slice(0, 8)
-      : airports.slice(0, 8);
+    let hits;
+    if (!terms.length) {
+      hits = airports.slice().sort((a, b) => b.flights - a.flights).slice(0, 12);
+    } else {
+      const scored = [];
+      airports.forEach((a) => {
+        const hay = (a.code + " " + a.city + " " + a.name).toLowerCase();
+        if (!terms.every((t) => hay.includes(t))) return;
+        const joined = terms.join(" ");
+        let score;
+        if (a.code.toLowerCase() === joined) score = 0;
+        else if (a.code.toLowerCase().startsWith(terms[0])) score = 1;
+        else if (a.city.toLowerCase().startsWith(terms[0])) score = 2;
+        else score = 3;
+        scored.push([a, score]);
+      });
+      scored.sort((x, y) => x[1] - y[1] || y[0].flights - x[0].flights);
+      hits = scored.slice(0, 12).map((x) => x[0]);
+    }
     if (!hits.length) { suggest.innerHTML = "<p class=\"suggest-empty\">No airports match.</p>"; suggest.hidden = false; return; }
     suggest.innerHTML = hits.map((a, i) =>
       `<button type="button" class="suggest-item" data-index="${i}" data-code="${a.code}" data-label="${a.code} — ${a.city}">${a.code} — ${a.city} <span class="muted">${a.name}</span></button>`

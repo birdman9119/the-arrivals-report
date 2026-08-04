@@ -9,6 +9,9 @@
   <h1>{{ a.city }}<br><span class="muted">{{ a.name }}</span></h1>
   <p class="lede">Most reliable airline for each major route, year to date ({{ ytd_label }}). Latest month: {{ month }}. Source: U.S. DOT.</p>
 </section>
+{% if not outbound and not inbound %}
+<p class="empty">No qualifying routes through {{ code }} yet — routes need at least 200 flights per month to appear here.</p>
+{% endif %}
 {% if outbound %}
 <section>
   <h2 class="section-title">From {{ code }} <span class="muted">— best airline per route</span></h2>
