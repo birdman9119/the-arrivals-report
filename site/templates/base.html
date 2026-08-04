@@ -85,10 +85,12 @@
       var text = DEFS[el.getAttribute("data-def")];
       if (!text) return;
       if (isTouch) {
-        el.addEventListener("click", function (e) {
-          e.preventDefault();
-          if (tip && tip._el === el) hide(); else show(el, text);
-        });
+        if (!el.closest("th")) {
+          el.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (tip && tip._el === el) hide(); else show(el, text);
+          });
+        }
       } else {
         el.addEventListener("mouseenter", function () { show(el, text); });
         el.addEventListener("mouseleave", hide);
@@ -103,6 +105,63 @@
     }
     document.addEventListener("scroll", hide, true);
     document.addEventListener("keydown", hide);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+</script>
+<script>
+(function () {
+  var DIR = { asc: 1, desc: -1 };
+  function cellText(row, i) { return row.children[i] ? row.children[i].textContent.trim() : ""; }
+  function num(text) {
+    var n = parseFloat(text.replace(/[^\d.\-]/g, ""));
+    return isNaN(n) ? null : n;
+  }
+  function wire() {
+    document.querySelectorAll("table").forEach(function (table) {
+      var tbody = table.querySelector("tbody");
+      var thead = table.querySelector("thead");
+      if (!tbody || !thead) return;
+      var ths = thead.querySelectorAll("th");
+      ths.forEach(function (th, i) {
+        var anySvg = tbody.querySelectorAll("td:nth-child(" + (i + 1) + ") svg").length > 0;
+        var hasText = Array.prototype.some.call(
+          tbody.querySelectorAll("td:nth-child(" + (i + 1) + ")"),
+          function (td) { return td.textContent.trim(); }
+        );
+        if (anySvg || !hasText) return;
+        var isNum = th.classList.contains("num");
+        th.classList.add("sortable");
+        var state = null, orig = null;
+        th.addEventListener("click", function () {
+          var rows = Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+          if (orig === null) orig = rows.slice();
+          var next = state === null ? "asc" : state === "asc" ? "desc" : null;
+          state = next;
+          ths.forEach(function (h) { h.classList.remove("sorted-asc", "sorted-desc"); h.removeAttribute("aria-sort"); });
+          if (next === null) {
+            orig.forEach(function (r) { tbody.appendChild(r); });
+            return;
+          }
+          th.classList.add(next === "asc" ? "sorted-asc" : "sorted-desc");
+          th.setAttribute("aria-sort", next === "asc" ? "ascending" : "descending");
+          var dir = DIR[next];
+          rows.sort(function (a, b) {
+            var av = isNum ? num(cellText(a, i)) : cellText(a, i).toLowerCase();
+            var bv = isNum ? num(cellText(b, i)) : cellText(b, i).toLowerCase();
+            if (isNum) {
+              if (av === null && bv === null) return 0;
+              if (av === null) return 1;
+              if (bv === null) return -1;
+              return (av - bv) * dir;
+            }
+            return av < bv ? -dir : av > bv ? dir : 0;
+          });
+          rows.forEach(function (r) { tbody.appendChild(r); });
+        });
+      });
+    });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
   else wire();
