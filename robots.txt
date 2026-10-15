@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://birdman9119.github.io/the-arrivals-report/sitemap.xml
